@@ -7,7 +7,9 @@ using namespace sf;
 
 int main()
 {      
-    RenderWindow window(VideoMode(1200, 800), "Qurczak Quest");
+    int windowHeight = 1920;
+    int windowWidth = 1080;
+    RenderWindow window(VideoMode(windowHeight, windowWidth), "Qurczak Quest", Style::Fullscreen);
     Kura kura;
     kura.rysuj();
 
@@ -21,20 +23,28 @@ int main()
         {
             if (event.type == Event::Closed) window.close();
             if (event.type == Event::KeyPressed) {
+                if (event.key.code == Keyboard::Escape) window.close();
                 if (event.key.code == Keyboard::D) {
-                    kura.x += 5;
+                    kura.x += 2;
                     kura.kierunek = "prawo";
-                    kura.aktualizuj();
+                    kura.chodzi = true;
+                    kura.krok();
 
                 }
                 if (event.key.code == Keyboard::A) {
-                    kura.x -= 5;
+                    kura.x -= 2;
                     kura.kierunek = "lewo";
-                    kura.aktualizuj();
+                    kura.chodzi = true;
+                    kura.krok();
                 }
+                if (event.key.code == Keyboard::W) if(!kura.lata) kura.skok();
+            }
+            if (event.type == Event::KeyReleased) {
+                if (event.key.code == Keyboard::A) kura.chodzi = false;
+                if (event.key.code == Keyboard::D) kura.chodzi = false;
             }
         }
-        
+        kura.aktualizuj();
         //-----------------------------------UPDATE-----------------------------------
 
 
