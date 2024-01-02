@@ -10,6 +10,17 @@ int main()
     int windowHeight = 1920;
     int windowWidth = 1080;
     RenderWindow window(VideoMode(windowHeight, windowWidth), "Qurczak Quest", Style::Fullscreen);
+    Texture teksturaTla;
+    Sprite tlo;
+    string sciezkaTla = "images/pustynia.png";
+    if (!teksturaTla.loadFromFile(sciezkaTla)) {
+        cout << "Nie za³adowano tekstury kury" << endl;
+    }
+    else {
+        tlo.setTexture(teksturaTla);
+        tlo.setPosition(Vector2f(0, 0));
+        tlo.scale(Vector2f(1, 1));
+    }
     Kura kura;
     kura.rysuj();
 
@@ -50,6 +61,7 @@ int main()
 
         //-----------------------------------DRAW-----------------------------------
         window.clear(Color::White);
+        window.draw(tlo);
         window.draw(kura.sprite);
         window.display();
         //-----------------------------------DRAW-----------------------------------
