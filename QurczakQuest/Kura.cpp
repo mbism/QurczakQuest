@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <time.h>
 
 using namespace std;
 using namespace sf;
@@ -7,10 +8,10 @@ using namespace sf;
 class Kura {
 private:
 	Texture tekstura;
-	string sciezkaTekstury = "images/testowe.png";
+	string sciezkaTekstury = "images/kura.png";
 	string kierunekUprzedni = "prawo";
 	int i = 0; //o ile razy ma siê przesun¹æ prostok¹t wyciêty ze sprite'a
-	int podloga = 500 - 24;
+	int podloga = 550 - 70;
 	int y = podloga;
 public:
 	Sprite sprite;
@@ -29,7 +30,7 @@ public:
 			sprite.setTexture(tekstura);
 			sprite.setPosition(Vector2f(x, y));
 			sprite.scale(Vector2f(2, 2));
-			sprite.setTextureRect(IntRect(0, 80, 30, 24));
+			sprite.setTextureRect(IntRect(0, 0, 70, 70));
 		}
 	}
 
@@ -50,22 +51,48 @@ public:
 			if (chodzi) {
 				if (kierunek == "prawo") x += 2;
 				else x -= 2;
+
 			}
+			if (y % 3 == 0) {
+				i++;
+				if (i > 2) i = 0;
+			}
+			if(lata) sprite.setTextureRect(IntRect(0 + 90 * i, 140, 90, 50));
+			else sprite.setTextureRect(IntRect(0, 0, 70, 70));
 			sprite.setPosition(Vector2f(x, y));
+		}
+		else if (!chodzi) {
+			time_t seconds;
+			seconds = time(NULL);
+			i = seconds % 2;
+			sprite.setTextureRect(IntRect(0 + i * 70, 0, 70, 70));
+			
 		}
 	}
 
 	void krok() {
-		if (x % 3 == 0) {
-			i++;
-			if (i > 5) i = 0;
+		int ilosc = 3;
+		int wysokosc = 70;
+		int dlugosc = 70;
+		int miejsceY = 70;
+		if (lata) {
+			ilosc = 2;
+			wysokosc = 50;
+			dlugosc = 90;
+			miejsceY = 140;
 		}
-		sprite.setPosition(Vector2f(x, y));
 		if (kierunek != kierunekUprzedni) {
 			sprite.scale(Vector2f(-1, 1));
 			kierunekUprzedni = kierunek;
+			if (kierunek == "prawo") x -= dlugosc;
+			else x += dlugosc;
 		}
-		sprite.setTextureRect(IntRect(0 + 30 * i, 80, 30, 24));
+		sprite.setPosition(Vector2f(x, y));
+		if (x % 3 == 0) {
+			i++;
+			if (i > ilosc) i = 0;
+		}
+		sprite.setTextureRect(IntRect(0 + dlugosc * i, miejsceY, dlugosc, wysokosc));
 	}
 
 	void skok() {
