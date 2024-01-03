@@ -15,6 +15,7 @@ private:
 	int y = podloga;
 public:
 	Sprite sprite;
+	//hejka
 	int x = 20;
 	string kierunek = "prawo";
 	bool do_gory = false;
