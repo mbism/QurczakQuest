@@ -15,7 +15,7 @@ private:
 	int y = podloga;
 public:
 	Sprite sprite;
-	//mo¿e w koñcu
+	int niepotzebna = 0;
 	//hejka
 	int x = 20;
 	string kierunek = "prawo";
