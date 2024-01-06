@@ -13,9 +13,11 @@ private:
 	int i = 0; //o ile razy ma siê przesun¹æ prostok¹t wyciêty ze sprite'a
 	int podloga = 550 - 70;
 	int y = podloga;
+	clock_t start = clock(); //timer, który pozwala na zmianê sprite'a 
+	clock_t koniec; //timer, który pozwala na zmianê sprite'a 
 public:
 	Sprite sprite;
-	int x = 20;
+	int x = 120;
 	string kierunek = "prawo";
 	bool do_gory = false;
 	bool na_dol = false;
@@ -37,7 +39,7 @@ public:
 	void aktualizuj() {
 		if (lata) {
 			if (do_gory) {
-				if (y >= podloga - 60) y -= 2;
+				if (y >= podloga - 140) y -= 2;
 				else {
 					na_dol = true;
 					do_gory = false;
@@ -47,31 +49,28 @@ public:
 				if (y <= podloga) y += 2;
 				else na_dol = false;
 			}
+			else if (chodzi && (x > 580 && x < 1200)) {
+				if (kierunek == "prawo") x += 10;
+				else x -= 10;
+			}
 			else lata = false;
-			if (chodzi) {
-				if (kierunek == "prawo") x += 2;
-				else x -= 2;
-
-			}
-			if (y % 3 == 0) {
-				i++;
-				if (i > 2) i = 0;
-			}
-			if(lata) sprite.setTextureRect(IntRect(0 + 90 * i, 140, 90, 50));
+			koniec = clock();
+			i = ((koniec - start) / 100) % 3;
+			if (i > 2) i = 0;
+			if (lata) sprite.setTextureRect(IntRect(0 + 90 * i, 140, 90, 50));
 			else sprite.setTextureRect(IntRect(0, 0, 70, 70));
 			sprite.setPosition(Vector2f(x, y));
 		}
 		else if (!chodzi) {
-			time_t seconds;
-			seconds = time(NULL);
-			i = seconds % 2;
+			koniec = clock();
+			i = ((koniec - start) / 1000) % 2;
+			if (i > 1) i = 0;
 			sprite.setTextureRect(IntRect(0 + i * 70, 0, 70, 70));
-			
 		}
 	}
 
 	void krok() {
-		int ilosc = 3;
+		int ilosc = 4;
 		int wysokosc = 70;
 		int dlugosc = 70;
 		int miejsceY = 70;
@@ -88,10 +87,9 @@ public:
 			else x += dlugosc;
 		}
 		sprite.setPosition(Vector2f(x, y));
-		if (x % 3 == 0) {
-			i++;
-			if (i > ilosc) i = 0;
-		}
+		koniec = clock();
+		i = ((koniec-start)/100) % ilosc;
+		if (i > ilosc) i = 0;
 		sprite.setTextureRect(IntRect(0 + dlugosc * i, miejsceY, dlugosc, wysokosc));
 	}
 

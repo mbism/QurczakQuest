@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "Kura.cpp"
+#include "Tlo.cpp"
 
 using namespace std;
 using namespace sf;
@@ -9,20 +10,17 @@ int main()
 {      
     int windowHeight = 1920;
     int windowWidth = 1080;
+    int poziom = 1;
     RenderWindow window(VideoMode(windowHeight, windowWidth), "Qurczak Quest", Style::Fullscreen);
-    Texture teksturaTla;
-    Sprite tlo;
-    string sciezkaTla = "images/pustynia.png";
-    if (!teksturaTla.loadFromFile(sciezkaTla)) {
-        cout << "Nie za³adowano tekstury kury" << endl;
-    }
-    else {
-        tlo.setTexture(teksturaTla);
-        tlo.setPosition(Vector2f(0, 0));
-        tlo.scale(Vector2f(1, 1));
-    }
+    Tlo tlo;
+    //sztuczne zmienne
+    //tlo.dodajSciezke("pustynia");
+    //tlo.x = -8430;
+    //-----------------------------
+    tlo.rysuj();
     Kura kura;
     kura.rysuj();
+
 
     //-----------------------------------GAME------------------------------------------------------------------
     while (window.isOpen())
@@ -36,17 +34,27 @@ int main()
             if (event.type == Event::KeyPressed) {
                 if (event.key.code == Keyboard::Escape) window.close();
                 if (event.key.code == Keyboard::D) {
-                    kura.x += 2;
+                    cout << tlo.x << " tlo; " << kura.x << " kura" << endl;
+                    if (kura.x > 1200 && tlo.x > tlo.granica) {
+                        tlo.x -= 10;
+                        tlo.aktualizuj();
+                    }
+                    else kura.x += 10;
                     kura.kierunek = "prawo";
                     kura.chodzi = true;
                     kura.krok();
-
                 }
                 if (event.key.code == Keyboard::A) {
-                    kura.x -= 2;
+                    cout << tlo.x << " tlo; " << kura.x << " kura" << endl;
+                    if (kura.x <= 580 && kura.x>20 && tlo.x < 0) {
+                        tlo.x += 10;
+                        tlo.aktualizuj();
+                    }
+                    else kura.x -= 10;
                     kura.kierunek = "lewo";
                     kura.chodzi = true;
                     kura.krok();
+                    if (tlo.x == 0 && kura.x < 190 && kura.kierunek == "lewo") kura.x = 180;
                 }
                 if (event.key.code == Keyboard::W) if(!kura.lata) kura.skok();
             }
@@ -57,12 +65,43 @@ int main()
         }
         kura.aktualizuj();
         //-----------------------------------UPDATE-----------------------------------
+        if (tlo.x == tlo.granica && kura.x >= 1980) {
+            cout << "Koniec poziomu" << endl;
+            poziom++;
+            if (poziom == 2) {
+                // KOD NA EKRAN PO POZIOMIE I LAS PODSIAD£A
+                tlo.dodajSciezke("miasto");
+                tlo.x = 0;
+                tlo.granica = -13450;
+                tlo.rysuj();
+                kura.x = 50;
+            }
+            else if (poziom == 3) {
+                // KOD NA EKRAN PO POZIOMIE I PIOSENKA O MIEŒCIE (proponujê Sen o Warszawie Niemena)
+                tlo.dodajSciezke("pustynia");
+                tlo.x = 0;
+                tlo.granica = -14470;
+                tlo.rysuj();
+                kura.x = 50;
+            }
+            else {
+                //KOD NA EKRAN PO POZIOMIE (WYGRANA !!!) NIE MA WODY NA PYSTYNI BAJMU
+            }
 
+            
+        }
 
         //-----------------------------------DRAW-----------------------------------
-        window.clear(Color::White);
-        window.draw(tlo);
+        window.clear();
+        window.draw(tlo.sprite);
         window.draw(kura.sprite);
+        Vertex line[] =
+        {
+            Vertex(Vector2f(kura.x, 200)),
+            Vertex(Vector2f(kura.x, 600))
+        };
+
+        //window.draw(line, 2, Lines);
         window.display();
         //-----------------------------------DRAW-----------------------------------
 
