@@ -10,11 +10,11 @@ private:
 	Texture tekstura;
 	string sciezkaTekstury = "images/kura.png";
 	string kierunekUprzedni = "prawo";
-	int i = 0; //o ile razy ma siê przesun¹æ prostok¹t wyciêty ze sprite'a
+	int i = 0; //o ile razy ma siÃª przesunÂ¹Ã¦ prostokÂ¹t wyciÃªty ze sprite'a
 	int podloga = 550 - 70;
 	int y = podloga;
-	clock_t start = clock(); //timer, który pozwala na zmianê sprite'a 
-	clock_t koniec; //timer, który pozwala na zmianê sprite'a 
+	clock_t start = clock(); //timer, ktÃ³ry pozwala na zmianÃª sprite'a 
+	clock_t koniec; //timer, ktÃ³ry pozwala na zmianÃª sprite'a 
 public:
 	Sprite sprite;
 	int x = 120;
@@ -26,7 +26,7 @@ public:
 
 	void rysuj() {
 		if (!tekstura.loadFromFile(sciezkaTekstury)) {
-			cout << "Nie za³adowano tekstury kury" << endl;
+			cout << "Nie zaÂ³adowano tekstury kury" << endl;
 		}
 		else {
 			sprite.setTexture(tekstura);
