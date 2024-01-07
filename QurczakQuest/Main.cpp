@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Kura.cpp"
 #include "Tlo.cpp"
+#include "Skorpion.cpp"
 
 using namespace std;
 using namespace sf;
@@ -11,6 +12,7 @@ int main()
     int windowHeight = 1920;
     int windowWidth = 1080;
     int poziom = 1;
+    int podloga = 550;
     RenderWindow window(VideoMode(windowHeight, windowWidth), "Qurczak Quest", Style::Fullscreen);
     Tlo tlo;
     //sztuczne zmienne
@@ -20,6 +22,9 @@ int main()
     tlo.rysuj();
     Kura kura;
     kura.rysuj();
+    Skorpion skorpion;
+    skorpion.rysuj();
+
 
 
     //-----------------------------------GAME------------------------------------------------------------------
@@ -38,6 +43,11 @@ int main()
                     if (kura.x > 1200 && tlo.x > tlo.granica) {
                         tlo.x -= 10;
                         tlo.aktualizuj();
+                        if (poziom == 3) {
+                            skorpion.x -= 10;
+                            skorpion.poczatkoweX -= 10;
+                        }
+
                     }
                     else kura.x += 10;
                     kura.kierunek = "prawo";
@@ -49,6 +59,10 @@ int main()
                     if (kura.x <= 580 && kura.x>20 && tlo.x < 0) {
                         tlo.x += 10;
                         tlo.aktualizuj();
+                        if (poziom == 3) {
+                            skorpion.x += 10;
+                            skorpion.poczatkoweX += 10;
+                        }
                     }
                     else kura.x -= 10;
                     kura.kierunek = "lewo";
@@ -64,6 +78,13 @@ int main()
             }
         }
         kura.aktualizuj();
+        if (poziom == 3) {
+            skorpion.aktualizuj();
+            bool kolizja = skorpion.sprawdz(kura.x, kura.y, kura.dlugosc, kura.wysokosc, kura.kierunek);
+            if (kolizja) kura.x = 120;
+        }
+
+        
         //-----------------------------------UPDATE-----------------------------------
         if (tlo.x == tlo.granica && kura.x >= 1980) {
             cout << "Koniec poziomu" << endl;
@@ -95,13 +116,17 @@ int main()
         window.clear();
         window.draw(tlo.sprite);
         window.draw(kura.sprite);
-        Vertex line[] =
+        if (poziom == 3) {
+            window.draw(skorpion.sprite);
+        }
+
+        /*Vertex line[] =
         {
             Vertex(Vector2f(kura.x, 200)),
             Vertex(Vector2f(kura.x, 600))
         };
-
-        //window.draw(line, 2, Lines);
+        window.draw(line, 2, Lines);
+        */
         window.display();
         //-----------------------------------DRAW-----------------------------------
 
