@@ -1,6 +1,5 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "WrogLas.h"
 
 using namespace std;
 using namespace sf;
@@ -9,7 +8,7 @@ class WrogLas {
 private:
 
 	Texture tekstura;
-	string sciezkaTekstury = "images/wiewiora.png"; //na razie wiewiórka ale zmieniê na lisa
+	string sciezkaTekstury = "images/wiewiora.png"; //na razie wiewiórka ale zmienie na lisa
 	int podloga = 550 - 40;
 	int y = podloga;
 	int x = 1080;
@@ -21,7 +20,7 @@ public:
 	void rysuj() {
 		if (!tekstura.loadFromFile(sciezkaTekstury))
 		{
-			cout << "Nie za³adowano tekstury lesnego przeciwnika - wiewiorki" << endl;
+			cout << "Nie zaladowano tekstury lesnego przeciwnika - wiewiorki" << endl;
 		}
 		else {
 			sprite.setTexture(tekstura);

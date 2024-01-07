@@ -69,6 +69,7 @@ public:
 			sprite.setTextureRect(IntRect(0 + i * 70, 0, 70, 70));
 			
 		}
+
 	}
 
 	void krok() {

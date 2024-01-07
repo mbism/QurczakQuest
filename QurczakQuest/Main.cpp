@@ -6,21 +6,22 @@
 #include <math.h>
 #include "Kura.cpp"
 #include "WrogLas.cpp"
+#include "statystyki.cpp"
 
 using namespace std;
 using namespace sf;
 
-Vector2f NormalizeVector(Vector2f vector)
-{
-    float m = sqrt(vector.x * vector.x + vector.y * vector.y);
+//Vector2f NormalizeVector(Vector2f vector)
+//{
+ //   float m = sqrt(vector.x * vector.x + vector.y * vector.y);
 
-    Vector2f normalizedVector;
+ //   Vector2f normalizedVector;
 
-    normalizedVector.x = vector.x / m;
-    normalizedVector.y = vector.y / m;
+ //   normalizedVector.x = vector.x / m;
+ //   normalizedVector.y = vector.y / m;
 
-    return normalizedVector;
-}
+ //   return normalizedVector;
+//}
 
 int main()
 {
@@ -39,19 +40,21 @@ int main()
         tlo.scale(Vector2f(1, 1)); 
     }
 
-    vector < CircleShape > bullets;
-    float bulletSpeed = 0.5f;
-    Vector2f bulletDirection;
+   // vector < CircleShape > bullets;
+    //float bulletSpeed = 2.f;
+    //Vector2f bulletDirection;
 
     Kura kura;
-    WrogLas wiewiora;
+  //  WrogLas wiewiora;
+    Statystyki statystyki;
+   // wiewiora.rysuj();
     kura.rysuj();
-    wiewiora.rysuj();
 
     //-----------------------------------GAME------------------------------------------------------------------
     while (window.isOpen())
     {
         //-----------------------------------UPDATE-----------------------------------
+        statystyki.zapiszCzasRozpoczecia();     //poczatek mierzenia czasu przez klase statystyki
         Event event;
         
         while (window.pollEvent(event))
@@ -79,27 +82,28 @@ int main()
                 if (event.key.code == Keyboard::D) kura.chodzi = false;
             }
 
-            if (Mouse::isButtonPressed(Mouse::Button::Left))
-            {
-                bullets.push_back(CircleShape(12.5)); // Przyk³adowy promieñ dla kuli
+  //                     if (Mouse::isButtonPressed(Mouse::Button::Left))
+    //                   {
+   //                        bullets.push_back(CircleShape(12)); // Przyk³adowy promieñ dla kuli
 
-                int i = bullets.size() - 1;
-                bullets[i].setPosition((kura.sprite).getPosition());
-
-                // Ustawienie po³o¿enia na œrodek kuli
-                bullets[i].setOrigin(bullets[i].getRadius(), bullets[i].getRadius());
-            }
-
-            for (size_t i = 0; i < bullets.size(); i++)
-            {
-                Vector2f bulletDirection = (wiewiora.sprite).getPosition() - bullets[i].getPosition();
-                bulletDirection = NormalizeVector(bulletDirection);
-                bullets[i].setPosition(bullets[i].getPosition() + bulletDirection * bulletSpeed);
-            }
-
+//                           int i = bullets.size() - 1;
+  //                         bullets[i].setPosition((kura.sprite).getPosition());
+    //                       bullets[i].setOrigin(bullets[i].getRadius(), bullets[i].getRadius());
+                        
+      //                 }
+//
+  //                     for (size_t i = 0; i < bullets.size(); i++)
+    //                   {
+      //                     Vector2f bulletDirection = (wiewiora.sprite).getPosition() - bullets[i].getPosition();
+        //                   bulletDirection = NormalizeVector(bulletDirection);
+          //                 bullets[i].setPosition(bullets[i].getPosition() + bulletDirection * bulletSpeed);
+            //           }
 
         }
             kura.aktualizuj();
+
+            statystyki.zapiszCzasZakonczenia();
+            statystyki.rysuj(window);
         //-----------------------------------UPDATE-----------------------------------
 
 
@@ -107,11 +111,11 @@ int main()
         window.clear(Color::White);
         window.draw(tlo);
         window.draw(kura.sprite);
-        window.draw(wiewiora.sprite);
-        for (size_t i = 0; i < bullets.size(); i++)
-        {
-            window.draw(bullets[i]);
-        }
+//        window.draw(wiewiora.sprite);
+ //       for (size_t i = 0; i < bullets.size(); i++)
+ //       {
+ //           window.draw(bullets[i]);
+  //      }
         window.display();
         //-----------------------------------DRAW-----------------------------------
 
