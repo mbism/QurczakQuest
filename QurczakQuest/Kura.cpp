@@ -10,15 +10,17 @@ private:
 	Texture tekstura;
 	string sciezkaTekstury = "images/kura.png";
 	string kierunekUprzedni = "prawo";
-	int i = 0; //o ile razy ma siê przesun¹æ prostok¹t wyciêty ze sprite'a
-	int podloga = 550 - 70;
-	int y = podloga;
+	int i = 0; //o ile razy ma sie przesunie prostokat wyciety ze sprite'a
+	int podloga = 630-140;
 	clock_t start = clock(); //timer, który pozwala na zmianê sprite'a 
 	clock_t koniec; //timer, który pozwala na zmianê sprite'a 
 public:
 	Sprite sprite;
 	int x = 120;
+	int y = podloga;
 	string kierunek = "prawo";
+	int dlugosc = 140;
+	int wysokosc = 140;
 	bool do_gory = false;
 	bool na_dol = false;
 	bool lata = false;
@@ -38,6 +40,8 @@ public:
 
 	void aktualizuj() {
 		if (lata) {
+			dlugosc = 180;
+			wysokosc = 100;
 			if (do_gory) {
 				if (y >= podloga - 140) y -= 2;
 				else {
