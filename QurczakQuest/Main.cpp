@@ -1,79 +1,76 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include <array>
-#include <chrono>
-#include <vector>
-#include <math.h>
 #include "Kura.cpp"
-#include "WrogLas.cpp"
-#include "statystyki.cpp"
+#include "Tlo.cpp"
+#include "Skorpion.cpp"
+#include "Wiewiora.cpp"
+#include "Statystyki.cpp"
+#include "Gameover.cpp"
 
 using namespace std;
 using namespace sf;
-
-//Vector2f NormalizeVector(Vector2f vector)
-//{
- //   float m = sqrt(vector.x * vector.x + vector.y * vector.y);
-
- //   Vector2f normalizedVector;
-
- //   normalizedVector.x = vector.x / m;
- //   normalizedVector.y = vector.y / m;
-
- //   return normalizedVector;
-//}
+using namespace chrono;
 
 int main()
 {
     int windowHeight = 1920;
     int windowWidth = 1080;
+    int poziom = 1;
+    int podloga = 550;
     RenderWindow window(VideoMode(windowHeight, windowWidth), "Qurczak Quest", Style::Fullscreen);
-    Texture teksturaTla;
-    Sprite tlo;
-    string sciezkaTla = "images/pustynia.png";
-    if (!teksturaTla.loadFromFile(sciezkaTla)) {
-        cout << "Nie za³adowano tekstury kury" << endl;
-    }
-    else {
-        tlo.setTexture(teksturaTla);
-        tlo.setPosition(Vector2f(0, 0));
-        tlo.scale(Vector2f(1, 1)); 
-    }
-
-   // vector < CircleShape > bullets;
-    //float bulletSpeed = 2.f;
-    //Vector2f bulletDirection;
-
+    Tlo tlo;
+    //sztuczne zmienne
+    //tlo.dodajSciezke("pustynia");
+    //tlo.x = -8430;
+    //-----------------------------
+    tlo.rysuj();
     Kura kura;
-  //  WrogLas wiewiora;
-    Statystyki statystyki;
-   // wiewiora.rysuj();
     kura.rysuj();
-
+    Skorpion skorpion;
+    Statystyki statystyki;
+    Wiewiora wiewiora;
     //-----------------------------------GAME------------------------------------------------------------------
     while (window.isOpen())
     {
         //-----------------------------------UPDATE-----------------------------------
-        statystyki.zapiszCzasRozpoczecia();     //poczatek mierzenia czasu przez klase statystyki
         Event event;
-        
+
         while (window.pollEvent(event))
         {
             if (event.type == Event::Closed) window.close();
             if (event.type == Event::KeyPressed) {
                 if (event.key.code == Keyboard::Escape) window.close();
                 if (event.key.code == Keyboard::D) {
-                    kura.x += 2;
+                    cout << tlo.x << " tlo; " << kura.x << " kura" << endl;
+                    if (kura.x > 1200 && tlo.x > tlo.granica) {
+                        tlo.x -= 10;
+                        tlo.aktualizuj();
+                        if (poziom == 3) {
+                            skorpion.x -= 10;
+                            skorpion.poczatkoweX -= 10;
+                        }
+
+                    }
+                    else kura.x += 10;
                     kura.kierunek = "prawo";
                     kura.chodzi = true;
                     kura.krok();
-
                 }
                 if (event.key.code == Keyboard::A) {
-                    kura.x -= 2;
+                    cout << tlo.x << " tlo; " << kura.x << " kura" << endl;
+                    if (kura.x <= 580 && kura.x > 20 && tlo.x < 0) {
+                        tlo.x += 10;
+                        tlo.aktualizuj();
+                        if (poziom == 3) {
+                            skorpion.x += 10;
+                            skorpion.poczatkoweX += 10;
+                        }
+                    }
+                    else kura.x -= 10;
                     kura.kierunek = "lewo";
                     kura.chodzi = true;
                     kura.krok();
+                    if (tlo.x == 0 && kura.x < 190 && kura.kierunek == "lewo") kura.x = 180;
                 }
                 if (event.key.code == Keyboard::W) if (!kura.lata) kura.skok();
             }
@@ -81,46 +78,67 @@ int main()
                 if (event.key.code == Keyboard::A) kura.chodzi = false;
                 if (event.key.code == Keyboard::D) kura.chodzi = false;
             }
-
-  //                     if (Mouse::isButtonPressed(Mouse::Button::Left))
-    //                   {
-   //                        bullets.push_back(CircleShape(12)); // Przyk³adowy promieñ dla kuli
-
-//                           int i = bullets.size() - 1;
-  //                         bullets[i].setPosition((kura.sprite).getPosition());
-    //                       bullets[i].setOrigin(bullets[i].getRadius(), bullets[i].getRadius());
-                        
-      //                 }
-//
-  //                     for (size_t i = 0; i < bullets.size(); i++)
-    //                   {
-      //                     Vector2f bulletDirection = (wiewiora.sprite).getPosition() - bullets[i].getPosition();
-        //                   bulletDirection = NormalizeVector(bulletDirection);
-          //                 bullets[i].setPosition(bullets[i].getPosition() + bulletDirection * bulletSpeed);
-            //           }
-
         }
-            kura.aktualizuj();
+        kura.aktualizuj();
+        if (poziom == 3) {
+            skorpion.aktualizuj();
+            bool kolizja = skorpion.sprawdz(kura.x, kura.y, kura.dlugosc, kura.wysokosc, kura.kierunek);
+            if (kolizja) kura.x = 120;
+        }
 
-            statystyki.zapiszCzasZakonczenia();
-            statystyki.rysuj(window);
+
         //-----------------------------------UPDATE-----------------------------------
+        if (tlo.x == tlo.granica && kura.x >= 1980) {
+            cout << "Koniec poziomu" << endl;
+            statystyki.zdobytePoziomy++;
+            statystyki.zapiszCzasZakonczenia();
+            if (poziom == 2) {
+                // KOD NA EKRAN PO POZIOMIE I LAS PODSIAD£A
+                tlo.dodajSciezke("miasto");
+                tlo.x = 0;
+                tlo.granica = -13450;
+                tlo.rysuj();
+                kura.x = 50;
+            }
+            else if (poziom == 3) {
+                // KOD NA EKRAN PO POZIOMIE I PIOSENKA O MIEŒCIE (proponujê Sen o Warszawie Niemena)
+                tlo.dodajSciezke("pustynia");
+                tlo.x = 0;
+                tlo.granica = -14470;
+                tlo.rysuj();
+                kura.x = 50;
+            }
+            else {
+                //KOD NA EKRAN PO POZIOMIE (WYGRANA !!!) NIE MA WODY NA PYSTYNI BAJMU
+            }
 
+            statystyki.rysuj(window);
+            poziom++;
+        }
 
         //-----------------------------------DRAW-----------------------------------
-        window.clear(Color::White);
-        window.draw(tlo);
+        window.clear();
+        window.draw(tlo.sprite);
         window.draw(kura.sprite);
-//        window.draw(wiewiora.sprite);
- //       for (size_t i = 0; i < bullets.size(); i++)
- //       {
- //           window.draw(bullets[i]);
-  //      }
+        if (poziom == 3) {
+            window.draw(skorpion.sprite);
+        }
+        if (poziom == 1) {
+            window.draw(wiewiora.sprite);
+        }
+
+        /*Vertex line[] =
+        {
+            Vertex(Vector2f(kura.x, 200)),
+            Vertex(Vector2f(kura.x, 600))
+        };
+        window.draw(line, 2, Lines);
+        */
         window.display();
         //-----------------------------------DRAW-----------------------------------
 
     }
     //-----------------------------------GAME------------------------------------------------------------------
-    
+
     return 0;
 }
