@@ -11,7 +11,6 @@ private:
 	string sciezkaTekstury = "images/skorpion.png";
 	int dlugosc = 90;
 	int wysokosc = 50;
-	int poczatkoweY = 630 - wysokosc;
 	int max = 2; //ilość klatek sprite'a
 	clock_t start = clock(); //timer, który pozwala na zmianę sprite'a 
 	clock_t koniec; //timer, który pozwala na zmianê sprite'a 
@@ -21,11 +20,12 @@ public:
 	Sprite sprite;
 	int poczatkoweX = 900;
 	int x = poczatkoweX;
-	int y = poczatkoweY;
+	int y = 630 - wysokosc;
 	string kierunek = "prawo";
 
 	void ustawX(int poczatkoweX_) {
 		poczatkoweX = poczatkoweX_;
+		x = poczatkoweX_;
 	}
 
 	void rysuj() {
@@ -71,8 +71,8 @@ public:
 	bool sprawdz(int kx, int ky, int kw, int kh, string kkierunek) {
 		int w = dlugosc;
 		int h = wysokosc;
-		cout << "kura " << kx << " " << ky << " " << kw << " " << kh << " " << kkierunek << " " << endl;
-		cout << "skrpion " << x << " " << y << " " << w << " " << h << " " << kierunek << " " << endl;
+		//cout << "kura " << kx << " " << ky << " " << kw << " " << kh << " " << kkierunek << " " << endl;
+		//cout << "skrpion " << x << " " << y << " " << w << " " << h << " " << kierunek << " " << endl;
 		if (kkierunek == "prawo") {
 			if (kierunek == "prawo") {
 				if (kx < x + w && kx + kw > x && ky <= y + h && ky + kh >= y) {

@@ -10,8 +10,8 @@ private:
 	Texture tekstura;
 	string sciezkaTekstury = "images/kura.png";
 	string kierunekUprzedni = "prawo";
+	int podloga = 630 - 140;
 	int i = 0; //o ile razy ma sie przesunie prostokat wyciety ze sprite'a
-	int podloga = 630-140;
 	clock_t start = clock(); //timer, który pozwala na zmianê sprite'a 
 	clock_t koniec; //timer, który pozwala na zmianê sprite'a 
 public:
@@ -28,7 +28,7 @@ public:
 
 	void rysuj() {
 		if (!tekstura.loadFromFile(sciezkaTekstury)) {
-			cout << "Nie za³adowano tekstury kury" << endl;
+			cout << "Nie zaladowano tekstury kury" << endl;
 		}
 		else {
 			sprite.setTexture(tekstura);
@@ -43,7 +43,7 @@ public:
 			dlugosc = 180;
 			wysokosc = 100;
 			if (do_gory) {
-				if (y >= podloga - 140) y -= 2;
+				if (y >= podloga - 160) y -= 2;
 				else {
 					na_dol = true;
 					do_gory = false;
@@ -53,7 +53,7 @@ public:
 				if (y <= podloga) y += 2;
 				else na_dol = false;
 			}
-			else if (chodzi && (x > 580 && x < 1200)) {
+			else if (chodzi && (x > 580 && x < 1200) && y <= podloga) {
 				if (kierunek == "prawo") x += 10;
 				else x -= 10;
 			}
