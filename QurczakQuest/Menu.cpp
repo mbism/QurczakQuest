@@ -20,43 +20,43 @@ Menu::Menu(float width, float height)
 
 
 
-	text1.setFont(font);
-	text1.setString("Qurczak");
-	text1.setCharacterSize(150);
-	text1.setFillColor(Color(204, 0, 0));
-	text1.setPosition(150, 10);
+text1.setFont(font);
+text1.setString("Qurczak");
+text1.setCharacterSize(230);
+text1.setFillColor(Color(204, 0, 0));
+text1.setPosition(500, 30);
 
 
 
-	text2.setFont(font);
-	text2.setString("Quest");
-	text2.setCharacterSize(150);
-	text2.setFillColor(Color(204, 0, 0));
-	text2.setPosition(250, 130);
+text2.setFont(font);
+text2.setString("Quest");
+text2.setCharacterSize(230);
+text2.setFillColor(Color(204, 0, 0));
+text2.setPosition(600, 230);
 
 
-	//PLAY
-	mainMenu[0].setFont(font2);
-	mainMenu[0].setFillColor(Color(0, 0, 0));
-	mainMenu[0].setString("PLAY");
-	mainMenu[0].setCharacterSize(60);
-	mainMenu[0].setPosition(400, 420);
+//PLAY
+mainMenu[0].setFont(font2);
+mainMenu[0].setFillColor(Color(0, 0, 0));
+mainMenu[0].setString("PLAY");
+mainMenu[0].setCharacterSize(80);
+mainMenu[0].setPosition(880, 600);
 
-	//OPTIONS
+//OPTIONS
 
-	mainMenu[1].setFont(font2);
-	mainMenu[1].setFillColor(Color(0, 0, 0));
-	mainMenu[1].setString("OPTIONS");
-	mainMenu[1].setCharacterSize(60);
-	mainMenu[1].setPosition(340, 510);
+mainMenu[1].setFont(font2);
+mainMenu[1].setFillColor(Color(0, 0, 0));
+mainMenu[1].setString("OPTIONS");
+mainMenu[1].setCharacterSize(80);
+mainMenu[1].setPosition(810, 750);
 
-	//EXIT
+//EXIT
 
-	mainMenu[2].setFont(font2);
-	mainMenu[2].setFillColor(Color(0, 0, 0));
-	mainMenu[2].setString("EXIT");
-	mainMenu[2].setCharacterSize(60);
-	mainMenu[2].setPosition(410, 600);
+mainMenu[2].setFont(font2);
+mainMenu[2].setFillColor(Color(0, 0, 0));
+mainMenu[2].setString("EXIT");
+mainMenu[2].setCharacterSize(80);
+mainMenu[2].setPosition(880, 900);
 
 	MainMenuSelected = -1;
 
