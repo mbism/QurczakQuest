@@ -21,43 +21,44 @@ Opcje::Opcje(float width, float height)
 
 
 
-	text1.setFont(font);
-	text1.setString("Qurczak");
-	text1.setCharacterSize(150);
-	text1.setFillColor(Color(204, 0, 0));
-	text1.setPosition(150, 10);
+text1.setFont(font);
+text1.setString("Qurczak");
+text1.setCharacterSize(230);
+text1.setFillColor(Color(204, 0, 0));
+text1.setPosition(500, 30);
 
 
 
-	text2.setFont(font);
-	text2.setString("Quest");
-	text2.setCharacterSize(150);
-	text2.setFillColor(Color(204, 0, 0));
-	text2.setPosition(250, 130);
+text2.setFont(font);
+text2.setString("Quest");
+text2.setCharacterSize(230);
+text2.setFillColor(Color(204, 0, 0));
+text2.setPosition(600, 230);
 
 
-	//PLAY
-	opcje[0].setFont(font2);
-	opcje[0].setFillColor(Color(0, 0, 0));
-	opcje[0].setString("OPCJE");
-	opcje[0].setCharacterSize(60);
-	opcje[0].setPosition(400, 420);
 
-	//OPTIONS
+//VOLUME
+opcje[0].setFont(font2);
+opcje[0].setFillColor(Color(0, 0, 0));
+opcje[0].setString("VOLUME");
+opcje[0].setCharacterSize(80);
+opcje[0].setPosition(800, 600);
 
-	opcje[1].setFont(font2);
-	opcje[1].setFillColor(Color(0, 0, 0));
-	opcje[1].setString("opcje");
-	opcje[1].setCharacterSize(60);
-	opcje[1].setPosition(340, 510);
+//STRZALAKI
 
-	//EXIT
+opcje[1].setFont(font2);
+opcje[1].setFillColor(Color(0, 0, 0));
+opcje[1].setString("<- ^ ->");
+opcje[1].setCharacterSize(80);
+opcje[1].setPosition(1250, 850);
 
-	opcje[2].setFont(font2);
-	opcje[2].setFillColor(Color(0, 0, 0));
-	opcje[2].setString("www");
-	opcje[2].setCharacterSize(60);
-	opcje[2].setPosition(410, 600);
+//WSAD
+
+opcje[2].setFont(font2);
+opcje[2].setFillColor(Color(0, 0, 0));
+opcje[2].setString("wsad");
+opcje[2].setCharacterSize(80);
+opcje[2].setPosition(450, 850);
 
 	OpcjeSelected = -1;
 
