@@ -14,8 +14,16 @@ Opcje::Opcje(float width, float height)
 	{
 		cout << "No font..";
 	}
+	 
+	//KOLKA
 
+	kolo1.setRadius(30);
+	kolo1.setFillColor(Color::Green);
+	kolo1.setPosition(678, 878);
 
+	kolo2.setRadius(30);
+	kolo2.setFillColor(Color::Green);
+	kolo2.setPosition(1190, 878);
 
 	//Tytulik
 
@@ -112,6 +120,9 @@ void Opcje::draw(RenderWindow& window)
 
 		if (open) {
 			window.clear(Color(255, 255, 204));
+			if (wsad == true) { window.draw(kolo1); }
+			if (wsad == false) { window.draw(kolo2); }
+
 			for (int i = 0; i < Max_opcje; i++)
 			{
 				window.draw(opcje[i]);

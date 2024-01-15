@@ -13,6 +13,7 @@ class Opcje
 public:
 	Opcje(float width, float height);
 	bool open = true;
+	bool wsad = true;
 
 	void draw(RenderWindow& window);
 	void MoveUp();
@@ -31,5 +32,7 @@ private:
 	Text opcje[Max_opcje];
 	Text text1;
 	Text text2;
+	CircleShape kolo1;
+	CircleShape kolo2;
 
 };

@@ -148,7 +148,7 @@ void Menu::MoveDown()
 	if (MainMenuSelected + 1 < Max_menu)
 	{
 		mainMenu[MainMenuSelected].setFillColor(Color::Black);
-		MainMenuSelected++;
+MainMenuSelected++;
 		if (MainMenuSelected == Max_menu)
 		{
 			MainMenuSelected = 0;
