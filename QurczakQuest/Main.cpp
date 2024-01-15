@@ -7,6 +7,7 @@
 #include "Zmija.cpp";
 #include "Sep.cpp";
 #include "Kurczak.cpp";
+#include "Menu.h"
 
 using namespace std;
 using namespace sf;
@@ -57,12 +58,18 @@ int main()
     sep.rysuj();
     //--------------------------------------------------------------
 
+    Menu menu = Menu(windowWidth, windowHeight);
+
+
     //-----------------------------------GAME------------------------------------------------------------------
     while (window.isOpen())
     {
         //-----------------------------------UPDATE-----------------------------------
         Event event;
-        
+        while (menu.open) {
+            menu.draw(window);
+        }
+
         while (window.pollEvent(event))
         {
             if (event.type == Event::Closed) window.close();
