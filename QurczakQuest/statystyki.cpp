@@ -15,14 +15,14 @@ private:
     Texture tekstura;
     string sciezkaTekstury = "images/kura.png";
     string sciezkaCzcionki = "pixelmix.ttf";
-    Clock clock;
     float najlepszyWynik;
-    float czas;
 
 public:
+    float czas;
     int zdobytePoziomy;
     Sprite sprite;
-    Statystyki() : zdobytePoziomy(0), najlepszyWynik(0), czas(0) {      //konstruktor
+    bool open = false;
+    Statystyki() : zdobytePoziomy(0), najlepszyWynik(FLT_MAX), czas(0) {      //konstruktor
         if (!tekstura.loadFromFile(sciezkaTekstury)) {
             cout << "Nie zaladowano tekstury kury" << endl;
         }
@@ -34,15 +34,8 @@ public:
         }
     }
 
-    void zapiszCzasZakonczenia() {
-        float czas = clock.getElapsedTime().asSeconds();
-        if (czas < najlepszyWynik) {
-            najlepszyWynik = czas;
-        }
-        clock.restart();
-    }
-
     void rysuj(RenderWindow& window) {
+        open = true;
         Font czcionka;
         if (!czcionka.loadFromFile(sciezkaCzcionki))
             throw("Blad ladowania czcionki");
@@ -92,11 +85,20 @@ public:
         tekstStatystyk5.setStyle(Text::Bold);
         tekstStatystyk5.setPosition(725, 980);
 
+        if (czas < najlepszyWynik) {
+            najlepszyWynik = czas;
+        }
+
+        int minut = czas / 60;
+        int sekund = int(czas)%60;
+        int minut1 = najlepszyWynik / 60;
+        int sekund1 = int(najlepszyWynik) % 60;
+
         tekstStatystyk.setString("Udalo ci sie ukonczyc poziom!");
         tekstStatystyk1.setString("Wyniki:");
         tekstStatystyk2.setString("Zdobyte poziomy: " + to_string(zdobytePoziomy));
-        tekstStatystyk3.setString("Czas przechodzenia poziomu: " + to_string(czas) + "s");
-        tekstStatystyk4.setString("Najlepszy wynik: " + to_string(najlepszyWynik) + "s");
+        tekstStatystyk3.setString("Czas przechodzenia poziomu: " + to_string(minut) +":"+to_string(sekund) + "min");
+        tekstStatystyk4.setString("Najlepszy wynik: " + to_string(minut) + ":" + to_string(sekund) + "min");
         tekstStatystyk5.setString("Aby przejsc dalej, nacisnij kure -------------------->");
 
         while (window.isOpen()) {
@@ -105,21 +107,28 @@ public:
                 if (event.type == Event::Closed) {
                     window.close();
                 }
-                if (Mouse::isButtonPressed(Mouse::Left))
+                if (Keyboard::isKeyPressed(Keyboard::Enter))
                 {
-                    window.close();
+                    //window.close();
+                    open = false;
                 }
+                if (event.type == Keyboard::Escape) window.close();
             }
 
-            window.clear();
-            window.draw(tekstStatystyk);
-            window.draw(tekstStatystyk1);
-            window.draw(tekstStatystyk2);
-            window.draw(tekstStatystyk3);
-            window.draw(tekstStatystyk4);
-            window.draw(tekstStatystyk5);
-            window.draw(sprite);
-            window.display();
+            if (open) {
+                window.clear();
+                window.draw(tekstStatystyk);
+                window.draw(tekstStatystyk1);
+                window.draw(tekstStatystyk2);
+                window.draw(tekstStatystyk3);
+                window.draw(tekstStatystyk4);
+                window.draw(tekstStatystyk5);
+                window.draw(sprite);
+                window.display();
+            }
+            else {
+                break;
+            }
         }
     }
 };

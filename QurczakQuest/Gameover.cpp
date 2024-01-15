@@ -15,7 +15,11 @@ private:
 
 public:
     Sprite sprite;
+    bool open1 = false;
+
     void rysuj(RenderWindow& window) {
+        open1 = true;
+
         if (!tekstura.loadFromFile(sciezkaTekstury)) {
             cout << "Nie zaladowano tekstury kury" << endl;
         }
@@ -53,17 +57,24 @@ public:
                 if (event.type == Event::Closed) {
                     window.close();
                 }
-                if (Mouse::isButtonPressed(Mouse::Left))
+                if (Keyboard::isKeyPressed(Keyboard::Enter))
                 {
-                    window.close();
+                    //window.close();
+                    open1 = false;
                 }
+                if (event.type == Keyboard::Escape) window.close();
             }
 
-            window.clear();
-            window.draw(tekst);
-            window.draw(tekst1);
-            window.draw(sprite);
-            window.display();
+            if (open1) {
+                window.clear();
+                window.draw(tekst);
+                window.draw(tekst1);
+                window.draw(sprite);
+                window.display();
+            }
+            else {
+                break;
+            }
         }
     }
 };

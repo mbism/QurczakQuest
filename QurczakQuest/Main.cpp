@@ -7,17 +7,23 @@
 #include "Zmija.cpp";
 #include "Sep.cpp";
 #include "Kurczak.cpp";
+#include "Statystyki.cpp";
+#include "Gameover.cpp"
 
 using namespace std;
 using namespace sf;
 
 int main()
-{      
+{   
+    //TYMCZASOWE JAK JEST MENU TO DAJ PO TYM
+    Clock zg;
+    
     int windowHeight = 1920;
     int windowWidth = 1080;
     int poziom = 1;
     bool kolizja = false;
     RenderWindow window(VideoMode(windowHeight, windowWidth), "Qurczak Quest", Style::Fullscreen);
+    window.setFramerateLimit(60);
     Tlo tlo;
     //sztuczne zmienne
     //tlo.dodajSciezke("pustynia");
@@ -26,6 +32,9 @@ int main()
     tlo.rysuj();
     Kura kura;
     kura.rysuj();
+    Statystyki statystyki;
+    Gameover smierc;
+    
     //---------------POZIOM 3: RYSOWANIE I USTAWIANIE POSTACI
     const int myszN = 6;
     Myszoskoczek myszoskoczki[myszN];
@@ -130,18 +139,18 @@ int main()
             //if (kolizja) kura.x = 120;
             for (int n = 0; n < myszN; n++) {
                 kolizja = myszoskoczki[n].sprawdz(kura.x, kura.y, kura.dlugosc, kura.wysokosc, kura.kierunek);
-                if (kolizja) break;
+                if (kolizja) smierc.rysuj(window);
             }
             if(!kolizja) {
                 for (int n = 0; n < skorpioN; n++) {
                     kolizja = skorpiony[n].sprawdz(kura.x, kura.y, kura.dlugosc, kura.wysokosc, kura.kierunek);
-                    if (kolizja) break;
+                    if (kolizja) smierc.rysuj(window);
                 }
             }
             if (!kolizja) {
                 for (int n = 0; n < zmijeN; n++) {
                     kolizja = zmije[n].sprawdz(kura.x, kura.y, kura.dlugosc, kura.wysokosc, kura.kierunek);
-                    if (kolizja) break;
+                    if (kolizja) smierc.rysuj(window);
                 }
             }
             if (kolizja) kura.x = 120;
@@ -152,9 +161,14 @@ int main()
         //-----------------------------------UPDATE-----------------------------------
         if (tlo.x == tlo.granica && kura.x >= 1980) {
             cout << "Koniec poziomu" << endl;
+            statystyki.czas = zg.getElapsedTime().asSeconds();
+            
             poziom++;
             if (poziom == 2) {
                 // KOD NA EKRAN PO POZIOMIE I LAS PODSIAD£A
+                statystyki.zdobytePoziomy++;
+                statystyki.rysuj(window);
+                zg.restart();
                 tlo.dodajSciezke("miasto");
                 tlo.x = 0;
                 tlo.granica = -13450;
@@ -163,6 +177,9 @@ int main()
             }
             else if (poziom == 3) {
                 // KOD NA EKRAN PO POZIOMIE I PIOSENKA O MIEŒCIE (proponujê Sen o Warszawie Niemena)
+                statystyki.zdobytePoziomy++;
+                statystyki.rysuj(window);
+                zg.restart();
                 tlo.dodajSciezke("pustynia");
                 tlo.x = 0;
                 tlo.granica = -14470;
@@ -171,8 +188,9 @@ int main()
             }
             else {
                 //KOD NA EKRAN PO POZIOMIE (WYGRANA !!!) NIE MA WODY NA PYSTYNI BAJMU
-            }
-
+                statystyki.zdobytePoziomy++;
+                statystyki.rysuj(window);
+            
             
         }
 
