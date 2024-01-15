@@ -104,15 +104,16 @@ void Opcje::draw(RenderWindow& window)
 				//window.close();
 				
 				if (OpcjeSelected == 0) {
-					open = false;
+					
 					break;
 				}
 				else if (OpcjeSelected == 1) {
-					//opcje
+					wsad = false;
 					break;
 				}
 				else if (OpcjeSelected == 2) {
-					window.close();
+					wsad = true;
+					break;
 				}
 			}
 			if (event.type == Keyboard::Escape) window.close();
