@@ -134,6 +134,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Gameover.cpp" />
+    <ClCompile Include="Koniec.cpp" />
     <ClCompile Include="Kura.cpp" />
     <ClCompile Include="Kurczak.cpp" />
     <ClCompile Include="Main.cpp" />

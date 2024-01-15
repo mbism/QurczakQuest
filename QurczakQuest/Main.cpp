@@ -9,6 +9,7 @@
 #include "Kurczak.cpp";
 #include "Statystyki.cpp";
 #include "Gameover.cpp"
+#include "Koniec.cpp"
 
 using namespace std;
 using namespace sf;
@@ -26,14 +27,16 @@ int main()
     window.setFramerateLimit(60);
     Tlo tlo;
     //sztuczne zmienne
-    //tlo.dodajSciezke("pustynia");
-    //tlo.granica = -14470;
+   // tlo.dodajSciezke("miasto");
+    //tlo.granica = -13450;
+
     //-----------------------------
     tlo.rysuj();
     Kura kura;
     kura.rysuj();
     Statystyki statystyki;
     Gameover smierc;
+    Ending koniec;
     
     //---------------POZIOM 3: RYSOWANIE I USTAWIANIE POSTACI
     const int myszN = 6;
@@ -134,26 +137,50 @@ int main()
             for (int n = 0; n < myszN; n++) myszoskoczki[n].aktualizuj();
             for (int n = 0; n < zmijeN; n++) zmije[n].aktualizuj();
             sep.aktualizuj();
-            if(!kurczak.zdobyty) kurczak.aktualizuj();
+            kurczak.aktualizuj();
 
-            //if (kolizja) kura.x = 120;
             for (int n = 0; n < myszN; n++) {
                 kolizja = myszoskoczki[n].sprawdz(kura.x, kura.y, kura.dlugosc, kura.wysokosc, kura.kierunek);
-                if (kolizja) smierc.rysuj(window);
+                if (kolizja) break;
             }
             if(!kolizja) {
                 for (int n = 0; n < skorpioN; n++) {
                     kolizja = skorpiony[n].sprawdz(kura.x, kura.y, kura.dlugosc, kura.wysokosc, kura.kierunek);
-                    if (kolizja) smierc.rysuj(window);
+                    if (kolizja) break;
                 }
             }
             if (!kolizja) {
                 for (int n = 0; n < zmijeN; n++) {
                     kolizja = zmije[n].sprawdz(kura.x, kura.y, kura.dlugosc, kura.wysokosc, kura.kierunek);
-                    if (kolizja) smierc.rysuj(window);
+                    if (kolizja) break;
                 }
             }
-            if (kolizja) kura.x = 120;
+        }
+
+        if (kolizja) {
+            smierc.rysuj(window);
+            tlo.x = 0;
+            kura.x = 50;
+            if (poziom == 3) {
+                for (int n = 0; n < myszN; n++)
+                {
+                    myszoskoczki[n].ustawX(myszX[n]);
+                };
+                for (int n = 0; n < skorpioN; n++)
+                {
+                    skorpiony[n].ustawX(skorpioX[n]);
+                };
+                for (int n = 0; n < zmijeN; n++) {
+                    zmije[n].ustawX(zmijeX[n]);
+                }
+                sep.x = sep.poczatkoweX;
+                kurczak.x = kurczak.poczatkoweX;
+                for (int n = 0; n < skorpioN; n++) skorpiony[n].aktualizuj();
+                for (int n = 0; n < myszN; n++) myszoskoczki[n].aktualizuj();
+                for (int n = 0; n < zmijeN; n++) zmije[n].aktualizuj();
+                sep.aktualizuj();
+                kurczak.aktualizuj();
+            }
         }
         //-----------ZMIANA SPRITE'ÓW I KOLIZJE
 
@@ -190,7 +217,8 @@ int main()
                 //KOD NA EKRAN PO POZIOMIE (WYGRANA !!!) NIE MA WODY NA PYSTYNI BAJMU
                 statystyki.zdobytePoziomy++;
                 statystyki.rysuj(window);
-            
+                koniec.rysuj(window);
+            }
             
         }
 
@@ -209,13 +237,7 @@ int main()
             }
         }
 
-        /*Vertex line[] =
-        {
-            Vertex(Vector2f(kura.x, 200)),
-            Vertex(Vector2f(kura.x, 600))
-        };
-        window.draw(line, 2, Lines);
-        */
+
         window.display();
         //-----------------------------------DRAW-----------------------------------
 

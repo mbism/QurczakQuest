@@ -10,8 +10,6 @@ using namespace chrono;
 class Statystyki {
 
 private:
-    //  steady_clock::time_point czasRozpoczecia;  ?? czy to odpowiednia forma mierzenia czasu?
-   //   steady_clock::time_point czasZakonczenia;
     Texture tekstura;
     string sciezkaTekstury = "images/kura.png";
     string sciezkaCzcionki = "pixelmix.ttf";
@@ -83,7 +81,7 @@ public:
         tekstStatystyk5.setCharacterSize(25);
         tekstStatystyk5.setFillColor(Color::White);
         tekstStatystyk5.setStyle(Text::Bold);
-        tekstStatystyk5.setPosition(725, 980);
+        tekstStatystyk5.setPosition(45, 980);
 
         if (czas < najlepszyWynik) {
             najlepszyWynik = czas;
@@ -99,7 +97,7 @@ public:
         tekstStatystyk2.setString("Zdobyte poziomy: " + to_string(zdobytePoziomy));
         tekstStatystyk3.setString("Czas przechodzenia poziomu: " + to_string(minut) +":"+to_string(sekund) + "min");
         tekstStatystyk4.setString("Najlepszy wynik: " + to_string(minut) + ":" + to_string(sekund) + "min");
-        tekstStatystyk5.setString("Aby przejsc dalej, nacisnij kure -------------------->");
+        tekstStatystyk5.setString("Aby przejsc dalej, nacisnij Enter.");
 
         while (window.isOpen()) {
             Event event;
@@ -111,6 +109,7 @@ public:
                 {
                     //window.close();
                     open = false;
+                    break;
                 }
                 if (event.type == Keyboard::Escape) window.close();
             }
@@ -126,7 +125,7 @@ public:
                 window.draw(sprite);
                 window.display();
             }
-            else {
+            else{
                 break;
             }
         }
