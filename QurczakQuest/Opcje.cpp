@@ -48,7 +48,7 @@ text2.setPosition(600, 230);
 //VOLUME
 opcje[0].setFont(font2);
 opcje[0].setFillColor(Color(0, 0, 0));
-opcje[0].setString("VOLUME");
+opcje[0].setString("BACK");
 opcje[0].setCharacterSize(80);
 opcje[0].setPosition(800, 600);
 
@@ -102,18 +102,16 @@ void Opcje::draw(RenderWindow& window)
 			if (Keyboard::isKeyPressed(Keyboard::Enter))
 			{
 				//window.close();
-				
+
 				if (OpcjeSelected == 0) {
-					
+					open = false;
 					break;
 				}
 				else if (OpcjeSelected == 1) {
 					wsad = false;
-					break;
 				}
 				else if (OpcjeSelected == 2) {
 					wsad = true;
-					break;
 				}
 			}
 			if (event.type == Keyboard::Escape) window.close();
@@ -132,9 +130,8 @@ void Opcje::draw(RenderWindow& window)
 			window.draw(text2);
 			window.display();
 		}
-		else {
-			break;
-		}
+		else break;
+
 	}
 }
 

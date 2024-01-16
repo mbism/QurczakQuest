@@ -13,6 +13,7 @@ class Menu
 public:
 	Menu(float width, float height);
 	bool open = true;
+	bool wsad = true;
 
 	void draw(RenderWindow& window);
 	void MoveUp();

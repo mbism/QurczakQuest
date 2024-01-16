@@ -15,7 +15,7 @@ Menu::Menu(float width, float height)
 	}
 
 
-
+	
 	//Tytulik
 
 
@@ -101,7 +101,9 @@ void Menu::draw(RenderWindow& window)
 					Opcje opcje = Opcje(windowWidth, windowHeight);
 					while (opcje.open) {
 						opcje.draw(window);
+						wsad = opcje.wsad;
 					}
+					cout << open << endl;
 				}
 				else {
 					window.close();
@@ -111,6 +113,7 @@ void Menu::draw(RenderWindow& window)
 		}
 
 		if (open) {
+			cout << "aaaa" << endl;
 			window.clear(Color(255, 255, 204));
 			for (int i = 0; i < Max_menu; i++)
 			{
@@ -120,9 +123,7 @@ void Menu::draw(RenderWindow& window)
 			window.draw(text2);
 			window.display();
 		}
-		else {
-			break;
-		}
+		else break;
 	}
 }
 
