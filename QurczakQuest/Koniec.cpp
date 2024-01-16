@@ -39,14 +39,14 @@ public:
         tekst.setCharacterSize(65);
         tekst.setFillColor(Color::White);
         tekst.setStyle(Text::Bold);
-        tekst.setPosition(125, 300);
+        tekst.setPosition(300, 300);
 
         Text tekst2;
         tekst2.setFont(czcionka);
-        tekst2.setCharacterSize(45);
+        tekst2.setCharacterSize(35);
         tekst2.setFillColor(Color::White);
         tekst2.setStyle(Text::Bold);
-        tekst2.setPosition(750, 500);
+        tekst2.setPosition(570, 500);
 
         Text tekst1;
         tekst1.setFont(czcionka);
@@ -55,9 +55,9 @@ public:
         tekst1.setStyle(Text::Bold);
         tekst1.setPosition(45, 980);
 
-        tekst.setString("Gratulacje, udalo Ci sie przejsc gre!");
-        tekst2.setString("Gra skonczona.");
-        tekst1.setString("Aby przejsc dalej, nacisnij Enter.");
+        tekst.setString("Udalo sie! Kurczak uratowany!");
+        tekst2.setString("Kura jest Ci bardzo wdzieczna.");
+        tekst1.setString("Koniec gry. Aby przejsc dalej, nacisnij Enter.");
 
         while (window.isOpen()) {
             Event event;
@@ -67,10 +67,12 @@ public:
                 }
                 if (Keyboard::isKeyPressed(Keyboard::Enter))
                 {
-                    //window.close();
                     open2 = false;
                 }
-                if (event.type == Keyboard::Escape) window.close();
+                if (Keyboard::isKeyPressed(Keyboard::Escape))
+                {
+                    window.close();
+                }
             }
 
             if (open2) {

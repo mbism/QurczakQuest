@@ -59,10 +59,12 @@ public:
                 }
                 if (Keyboard::isKeyPressed(Keyboard::Enter))
                 {
-                    //window.close();
                     open1 = false;
                 }
-                if (event.type == Keyboard::Escape) window.close();
+                if (Keyboard::isKeyPressed(Keyboard::Escape))
+                {
+                    window.close();
+                }
             }
 
             if (open1) {

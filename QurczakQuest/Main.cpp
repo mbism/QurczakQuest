@@ -2,6 +2,9 @@
 #include <iostream>
 #include "Kura.cpp"
 #include "Tlo.cpp"
+//#include "Pien.cpp"
+#include "Jerz.cpp"
+#include "Zajac.cpp"
 #include "Skorpion.cpp"
 #include "Myszoskoczek.cpp"
 #include "Zmija.cpp";
@@ -39,6 +42,28 @@ int main()
     Ending koniec;
     
     //---------------POZIOM 3: RYSOWANIE I USTAWIANIE POSTACI
+  //  const int drzewN = 6;
+  //  Pien drzewo[drzewN];
+ //   int drzewX[] = { 1000, 4060, 6200, 8000, 8500, 9000 };
+  //  for (int n = 0; n < drzewN; n++)
+  //  {
+ //       drzewo[n].rysuj();
+ //       drzewo[n].ustawX(drzewX[n]);
+ //   };
+    const int jerzN = 7;
+    Jerz jerze[jerzN];
+    int jerzX[] = { 950, 2325, 3000, 4300, 7000, 9600, 10500 };
+    for (int n = 0; n < jerzN; n++) {
+        jerze[n].rysuj();
+        jerze[n].ustawX(jerzX[n]);
+    };
+    const int zajacN = 7;
+    Zajac zajace[zajacN];
+    int zajacX[] = { 1950, 2700, 3500, 5400, 8800, 9200, 10000 };
+    for (int n = 0; n < zajacN; n++) {
+        zajace[n].rysuj();
+        zajace[n].ustawX(zajacX[n]);
+    };
     const int myszN = 6;
     Myszoskoczek myszoskoczki[myszN];
     int myszX[] = { 1000, 4060, 6200, 8000, 8500, 9000 };
@@ -84,6 +109,10 @@ int main()
                     if (kura.x > 1200 && tlo.x > tlo.granica) {
                         tlo.x -= 10;
                         tlo.aktualizuj();
+                        if (poziom == 1) {
+                            for (int n = 0; n < jerzN; n++) jerze[n].x -= 10;
+                            for (int n = 0; n < zajacN; n++) zajace[n].x -= 10;
+                        }
                         if (poziom == 3) {
                             for (int n = 0; n < skorpioN; n++) {
                                 skorpiony[n].x -= 10;
@@ -106,6 +135,10 @@ int main()
                     if (kura.x <= 580 && kura.x>20 && tlo.x < 0) {
                         tlo.x += 10;
                         tlo.aktualizuj();
+                        if (poziom == 1) {
+                            for (int n = 0; n < jerzN; n++) jerze[n].x += 10;
+                            for (int n = 0; n < zajacN; n++) zajace[n].x += 10;
+                        }
                         if (poziom == 3) {
                             for (int n = 0; n < skorpioN; n++) {
                                 skorpiony[n].x += 10;
@@ -132,6 +165,21 @@ int main()
         }
         kura.aktualizuj();
         //-----------ZMIANA SPRITE'ÓW I KOLIZJE
+        if (poziom == 1) {
+            for (int n = 0; n < zajacN; n++) zajace[n].aktualizuj();
+            for (int n = 0; n < jerzN; n++) jerze[n].aktualizuj();
+
+                for (int n = 0; n < zajacN; n++) {
+                    kolizja = zajace[n].sprawdz(kura.x, kura.y, kura.dlugosc, kura.wysokosc, kura.kierunek);
+                    if (kolizja) break;
+                }
+                if (!kolizja) {
+                    for (int n = 0; n < jerzN; n++) {
+                        kolizja = jerze[n].sprawdz(kura.x, kura.y, kura.dlugosc, kura.wysokosc, kura.kierunek);
+                        if (kolizja) break;
+                    }
+                }
+        }
         if (poziom == 3) {
             for (int n = 0; n < skorpioN; n++) skorpiony[n].aktualizuj();
             for (int n = 0; n < myszN; n++) myszoskoczki[n].aktualizuj();
@@ -161,6 +209,17 @@ int main()
             smierc.rysuj(window);
             tlo.x = 0;
             kura.x = 50;
+            if (poziom == 1) {
+                for (int n = 0; n < zajacN; n++)
+                {
+                    zajace[n].ustawX(zajacX[n]);
+                };
+                for (int n = 0; n < jerzN; n++) {
+                    jerze[n].ustawX(jerzX[n]);
+                }
+                for (int n = 0; n < jerzN; n++) zajace[n].aktualizuj();
+                for (int n = 0; n < jerzN; n++) jerze[n].aktualizuj();
+            }
             if (poziom == 3) {
                 for (int n = 0; n < myszN; n++)
                 {
@@ -226,6 +285,10 @@ int main()
         window.clear();
         window.draw(tlo.sprite);
         window.draw(kura.sprite);
+        if (poziom == 1) {
+            for (int n = 0; n < zajacN; n++) window.draw(zajace[n].sprite);
+            for (int n = 0; n < jerzN; n++) window.draw(jerze[n].sprite);
+        }
         if (poziom == 3) {
             for (int n = 0; n < skorpioN; n++) window.draw(skorpiony[n].sprite);
             for (int n = 0; n < myszN; n++) window.draw(myszoskoczki[n].sprite);

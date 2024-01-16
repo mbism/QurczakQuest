@@ -107,11 +107,13 @@ public:
                 }
                 if (Keyboard::isKeyPressed(Keyboard::Enter))
                 {
-                    //window.close();
                     open = false;
                     break;
                 }
-                if (event.type == Keyboard::Escape) window.close();
+                if (Keyboard::isKeyPressed(Keyboard::Escape))
+                {
+                    window.close();
+                }
             }
 
             if (open) {
