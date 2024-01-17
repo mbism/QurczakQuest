@@ -3,7 +3,7 @@
 #include "Kura.cpp"
 #include "Tlo.cpp"
 //#include "Pien.cpp"
-#include "Jerz.cpp"
+#include "Jez.cpp"
 #include "Zajac.cpp"
 #include "Skorpion.cpp"
 #include "Myszoskoczek.cpp"
