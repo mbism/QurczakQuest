@@ -113,7 +113,6 @@ void Menu::draw(RenderWindow& window)
 		}
 
 		if (open) {
-			cout << "aaaa" << endl;
 			window.clear(Color(255, 255, 204));
 			for (int i = 0; i < Max_menu; i++)
 			{
