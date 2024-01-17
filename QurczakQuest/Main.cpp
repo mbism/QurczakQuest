@@ -13,9 +13,14 @@
 #include "Statystyki.cpp";
 #include "Gameover.cpp"
 #include "Koniec.cpp"
+#include "Menu.h"
+#include "Opcje.h"
 
 using namespace std;
 using namespace sf;
+//doÂ³aczyÂ³am
+
+bool wsad = false;
 
 int main()
 {   
@@ -35,6 +40,7 @@ int main()
 
     //-----------------------------
     tlo.rysuj();
+   
     Kura kura;
     kura.rysuj();
     Statystyki statystyki;
@@ -91,79 +97,150 @@ int main()
     kurczak.rysuj();
     Sep sep;
     sep.rysuj();
+
+  
     //--------------------------------------------------------------
+
+    Menu menu = Menu(windowWidth, windowHeight);
+
 
     //-----------------------------------GAME------------------------------------------------------------------
     while (window.isOpen())
     {
         //-----------------------------------UPDATE-----------------------------------
         Event event;
-        
+        while (menu.open) {
+            menu.draw(window);
+            wsad = menu.wsad;
+        }
+
         while (window.pollEvent(event))
         {
             if (event.type == Event::Closed) window.close();
             if (event.type == Event::KeyPressed) {
                 if (event.key.code == Keyboard::Escape) window.close();
-                if (event.key.code == Keyboard::D) {
-                    if (kura.x > 1200 && tlo.x > tlo.granica) {
-                        tlo.x -= 10;
-                        tlo.aktualizuj();
-                        if (poziom == 1) {
+                if (wsad == true)
+                {
+                    if (event.key.code == Keyboard::D) {
+                        cout << tlo.x << " tlo; " << kura.x << " kura" << endl;
+                        if (kura.x > 1200 && tlo.x > tlo.granica) {
+                            tlo.x -= 10;
+                            tlo.aktualizuj();
+                            if (poziom == 1) {
                             for (int n = 0; n < jerzN; n++) jerze[n].x -= 10;
                             for (int n = 0; n < zajacN; n++) zajace[n].x -= 10;
                         }
-                        if (poziom == 3) {
-                            for (int n = 0; n < skorpioN; n++) {
-                                skorpiony[n].x -= 10;
-                                skorpiony[n].poczatkoweX -= 10;
+                            else if (poziom == 3) {
+                                for (int n = 0; n < skorpioN; n++) {
+                                    skorpiony[n].x -= 10;
+                                    skorpiony[n].poczatkoweX -= 10;
+                                }
+                                for (int n = 0; n < myszN; n++) myszoskoczki[n].x -= 10;
+                                for (int n = 0; n < zmijeN; n++) zmije[n].x -= 10;
+                                sep.x -= 10;
+                                kurczak.x -= 10;
                             }
-                            for (int n = 0; n < myszN; n++) myszoskoczki[n].x -= 10;
-                            for (int n = 0; n < zmijeN; n++) zmije[n].x -= 10;
-                            sep.x -= 10;
-                            kurczak.x -= 10;
-                        }
 
-                    }
-                    else kura.x += 10;
-                    kura.kierunek = "prawo";
-                    kura.chodzi = true;
-                    kura.krok();
-                }
-                if (event.key.code == Keyboard::A) {
-                    cout << tlo.x << " tlo; " << kura.x << " kura" << endl;
-                    if (kura.x <= 580 && kura.x>20 && tlo.x < 0) {
-                        tlo.x += 10;
-                        tlo.aktualizuj();
-                        if (poziom == 1) {
-                            for (int n = 0; n < jerzN; n++) jerze[n].x += 10;
-                            for (int n = 0; n < zajacN; n++) zajace[n].x += 10;
                         }
-                        if (poziom == 3) {
-                            for (int n = 0; n < skorpioN; n++) {
-                                skorpiony[n].x += 10;
-                                skorpiony[n].poczatkoweX += 10;
+                        else kura.x += 10;
+                        kura.kierunek = "prawo";
+                        kura.chodzi = true;
+                        kura.krok();
+                    }
+                    if (event.key.code == Keyboard::A) {
+                        cout << tlo.x << " tlo; " << kura.x << " kura" << endl;
+                        if (kura.x <= 580 && kura.x > 20 && tlo.x < 0) {
+                            tlo.x += 10;
+                            tlo.aktualizuj();
+                            if (poziom == 3) {
+                                for (int n = 0; n < skorpioN; n++) {
+                                    skorpiony[n].x += 10;
+                                    skorpiony[n].poczatkoweX += 10;
+                                }
+                                for (int n = 0; n < myszN; n++) myszoskoczki[n].x += 10;
+                                for (int n = 0; n < zmijeN; n++) zmije[n].x += 10;
+                                sep.x += 10;
+                                kurczak.x += 10;
                             }
-                            for (int n = 0; n < myszN; n++) myszoskoczki[n].x += 10;
-                            for (int n = 0; n < zmijeN; n++) zmije[n].x += 10;
-                            sep.x += 10;
-                            kurczak.x += 10;
                         }
+                        else kura.x -= 10;
+                        kura.kierunek = "lewo";
+                        kura.chodzi = true;
+                        kura.krok();
+                        if (tlo.x == 0 && kura.x < 190 && kura.kierunek == "lewo") kura.x = 180;
                     }
-                    else kura.x -= 10;
-                    kura.kierunek = "lewo";
-                    kura.chodzi = true;
-                    kura.krok();
-                    if (tlo.x == 0 && kura.x < 190 && kura.kierunek == "lewo") kura.x = 180;
+                    if (event.key.code == Keyboard::W) if (!kura.lata) kura.skok();
+
+                    if (event.type == Event::KeyReleased) {
+                        if (event.key.code == Keyboard::A) kura.chodzi = false;
+                        if (event.key.code == Keyboard::D) kura.chodzi = false;
+                    }
                 }
-                if (event.key.code == Keyboard::W) if(!kura.lata) kura.skok();
-            }
-            if (event.type == Event::KeyReleased) {
-                if (event.key.code == Keyboard::A) kura.chodzi = false;
-                if (event.key.code == Keyboard::D) kura.chodzi = false;
+                if (wsad == false)
+                {
+                    if (event.key.code == Keyboard::Right) {
+                        cout << tlo.x << " tlo; " << kura.x << " kura" << endl;
+                        if (kura.x > 1200 && tlo.x > tlo.granica) {
+                            tlo.x -= 10;
+                            tlo.aktualizuj();
+                            if (poziom == 1) {
+                                for (int n = 0; n < jerzN; n++) jerze[n].x -= 10;
+                                for (int n = 0; n < zajacN; n++) zajace[n].x -= 10;
+                            }
+                            else if (poziom == 3) {
+                                for (int n = 0; n < skorpioN; n++) {
+                                    skorpiony[n].x -= 10;
+                                    skorpiony[n].poczatkoweX -= 10;
+                                }
+                                for (int n = 0; n < myszN; n++) myszoskoczki[n].x -= 10;
+                                for (int n = 0; n < zmijeN; n++) zmije[n].x -= 10;
+                                sep.x -= 10;
+                                kurczak.x -= 10;
+                            }
+
+                        }
+                        else kura.x += 10;
+                        kura.kierunek = "prawo";
+                        kura.chodzi = true;
+                        kura.krok();
+                    }
+                    if (event.key.code == Keyboard::Left) {
+                        cout << tlo.x << " tlo; " << kura.x << " kura" << endl;
+                        if (kura.x <= 580 && kura.x > 20 && tlo.x < 0) {
+                            tlo.x += 10;
+                            tlo.aktualizuj();
+                            if (poziom == 1) {
+                              for (int n = 0; n < jerzN; n++) jerze[n].x += 10;
+                              for (int n = 0; n < zajacN; n++) zajace[n].x += 10;
+                            }
+                            else if (poziom == 3) {
+                                for (int n = 0; n < skorpioN; n++) {
+                                    skorpiony[n].x += 10;
+                                    skorpiony[n].poczatkoweX += 10;
+                                }
+                                for (int n = 0; n < myszN; n++) myszoskoczki[n].x += 10;
+                                for (int n = 0; n < zmijeN; n++) zmije[n].x += 10;
+                                sep.x += 10;
+                                kurczak.x += 10;
+                            }
+                        }
+                        else kura.x -= 10;
+                        kura.kierunek = "lewo";
+                        kura.chodzi = true;
+                        kura.krok();
+                        if (tlo.x == 0 && kura.x < 190 && kura.kierunek == "lewo") kura.x = 180;
+                    }
+                    if (event.key.code == Keyboard::Up) if (!kura.lata) kura.skok();
+
+                    if (event.type == Event::KeyReleased) {
+                        if (event.key.code == Keyboard::Left) kura.chodzi = false;
+                        if (event.key.code == Keyboard::Right) kura.chodzi = false;
+                    }
+                }
             }
         }
         kura.aktualizuj();
-        //-----------ZMIANA SPRITE'ÓW I KOLIZJE
+        //-----------ZMIANA SPRITE'Ã“W I KOLIZJE
         if (poziom == 1) {
             for (int n = 0; n < zajacN; n++) zajace[n].aktualizuj();
             for (int n = 0; n < jerzN; n++) jerze[n].aktualizuj();
@@ -240,7 +317,7 @@ int main()
                 kurczak.aktualizuj();
             }
         }
-        //-----------ZMIANA SPRITE'ÓW I KOLIZJE
+        //-----------ZMIANA SPRITE'Ã“W I KOLIZJE
 
         
         //-----------------------------------UPDATE-----------------------------------
@@ -250,7 +327,7 @@ int main()
             
             poziom++;
             if (poziom == 2) {
-                // KOD NA EKRAN PO POZIOMIE I LAS PODSIAD£A
+                // KOD NA EKRAN PO POZIOMIE I LAS PODSIADÂ£A
                 statystyki.zdobytePoziomy++;
                 statystyki.rysuj(window);
                 zg.restart();
@@ -261,7 +338,7 @@ int main()
                 kura.x = 50;
             }
             else if (poziom == 3) {
-                // KOD NA EKRAN PO POZIOMIE I PIOSENKA O MIEŒCIE (proponujê Sen o Warszawie Niemena)
+                // KOD NA EKRAN PO POZIOMIE I PIOSENKA O MIEÂŒCIE (proponujÃª Sen o Warszawie Niemena)
                 statystyki.zdobytePoziomy++;
                 statystyki.rysuj(window);
                 zg.restart();
