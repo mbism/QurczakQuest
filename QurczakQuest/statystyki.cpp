@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <chrono>
+#include <fstream>
 
 using namespace std;
 using namespace sf;
@@ -83,9 +84,43 @@ public:
         tekstStatystyk5.setStyle(Text::Bold);
         tekstStatystyk5.setPosition(45, 980);
 
-        if (czas < najlepszyWynik) {
+        ifstream wynik1("save/save1.txt");
+        ifstream wynik2("save/save2.txt");
+        ifstream wynik3("save/save3.txt");
+        string docel;
+        switch (zdobytePoziomy) {
+        case 1:
+
+            wynik1 >> najlepszyWynik;
+            docel = "save/save1.txt";
+            break;
+
+        case 2:
+
+            wynik2 >> najlepszyWynik;
+            docel = "save/save2.txt";
+            break;
+        case 3:
+
+            wynik3 >> najlepszyWynik;
+            docel = "save/save3.txt";
+            break;
+
+        }
+        wynik1.close();
+        wynik2.close();
+        wynik3.close();
+        ofstream ofs;
+        if(czas < najlepszyWynik){
+            ofs.open(docel, ofstream::trunc);
+            ofs << czas;
             najlepszyWynik = czas;
         }
+        ofs.close();
+            
+
+
+
 
         int minut = czas / 60;
         int sekund = int(czas)%60;
@@ -96,7 +131,7 @@ public:
         tekstStatystyk1.setString("Wyniki:");
         tekstStatystyk2.setString("Zdobyte poziomy: " + to_string(zdobytePoziomy));
         tekstStatystyk3.setString("Czas przechodzenia poziomu: " + to_string(minut) +":"+to_string(sekund) + "min");
-        tekstStatystyk4.setString("Najlepszy wynik: " + to_string(minut) + ":" + to_string(sekund) + "min");
+        tekstStatystyk4.setString("Najlepszy wynik: " + to_string(minut1) + ":" + to_string(sekund1) + "min");
         tekstStatystyk5.setString("Aby przejsc dalej, nacisnij Enter.");
 
         while (window.isOpen()) {

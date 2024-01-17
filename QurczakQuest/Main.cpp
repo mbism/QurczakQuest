@@ -263,7 +263,7 @@ int main()
             sep.aktualizuj();
             kurczak.aktualizuj();
 
-            for (int n = 0; n < myszN; n++) {
+         /*/   for (int n = 0; n < myszN; n++) {
                 kolizja = myszoskoczki[n].sprawdz(kura.x, kura.y, kura.dlugosc, kura.wysokosc, kura.kierunek);
                 if (kolizja) break;
             }
@@ -315,7 +315,7 @@ int main()
                 for (int n = 0; n < zmijeN; n++) zmije[n].aktualizuj();
                 sep.aktualizuj();
                 kurczak.aktualizuj();
-            }
+            }/*/
         }
         //-----------ZMIANA SPRITE'ÓW I KOLIZJE
 
