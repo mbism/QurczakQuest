@@ -15,6 +15,7 @@
 #include "Koniec.cpp"
 #include "Menu.h"
 #include "Opcje.h"
+#include "Hydrant.cpp"
 
 using namespace std;
 using namespace sf;
@@ -56,6 +57,13 @@ int main()
  //       drzewo[n].rysuj();
  //       drzewo[n].ustawX(drzewX[n]);
  //   };
+    const int hydrantN = 7;
+    Hydrant hydranty[hydrantN];
+    int hydrantX[] = { 950, 2325, 3000, 4300, 7000, 9600, 10500 };
+    for (int n = 0; n < hydrantN; n++) {
+        hydranty[n].rysuj();
+        hydranty[n].ustawX(hydrantX[n]);
+    };
     const int jerzN = 7;
     Jerz jerze[jerzN];
     int jerzX[] = { 950, 2325, 3000, 4300, 7000, 9600, 10500 };
@@ -127,9 +135,15 @@ int main()
                             tlo.x -= 10;
                             tlo.aktualizuj();
                             if (poziom == 1) {
-                            for (int n = 0; n < jerzN; n++) jerze[n].x -= 10;
-                            for (int n = 0; n < zajacN; n++) zajace[n].x -= 10;
-                        }
+                                for (int n = 0; n < jerzN; n++) jerze[n].x -= 10;
+                                for (int n = 0; n < zajacN; n++) zajace[n].x -= 10;
+                            
+                            }
+                            else if (poziom == 2)
+                            {
+                                for (int n = 0; n < hydrantN; n++) hydranty[n].x -= 10;
+                                
+                            }
                             else if (poziom == 3) {
                                 for (int n = 0; n < skorpioN; n++) {
                                     skorpiony[n].x -= 10;
@@ -187,6 +201,11 @@ int main()
                                 for (int n = 0; n < jerzN; n++) jerze[n].x -= 10;
                                 for (int n = 0; n < zajacN; n++) zajace[n].x -= 10;
                             }
+
+                            else if(poziom == 2) {
+                                for (int n = 0; n < hydrantN; n++) hydranty[n].x -= 10;
+                                
+                            }
                             else if (poziom == 3) {
                                 for (int n = 0; n < skorpioN; n++) {
                                     skorpiony[n].x -= 10;
@@ -212,6 +231,12 @@ int main()
                             if (poziom == 1) {
                               for (int n = 0; n < jerzN; n++) jerze[n].x += 10;
                               for (int n = 0; n < zajacN; n++) zajace[n].x += 10;
+                            }
+
+                            else if (poziom ==2)
+                            {
+                                for (int n = 0; n < hydrantN; n++) hydranty[n].x += 10;
+                                
                             }
                             else if (poziom == 3) {
                                 for (int n = 0; n < skorpioN; n++) {
@@ -256,6 +281,18 @@ int main()
                     }
                 }
         }
+        if (poziom == 2) {
+            
+            for (int n = 0; n < hydrantN; n++) hydranty[n].aktualizuj();
+
+           
+            if (!kolizja) {
+                for (int n = 0; n < hydrantN; n++) {
+                    kolizja = hydranty[n].sprawdz(kura.x, kura.y, kura.dlugosc, kura.wysokosc, kura.kierunek);
+                    if (kolizja) break;
+                }
+            }
+        }
         if (poziom == 3) {
             for (int n = 0; n < skorpioN; n++) skorpiony[n].aktualizuj();
             for (int n = 0; n < myszN; n++) myszoskoczki[n].aktualizuj();
@@ -263,7 +300,7 @@ int main()
             sep.aktualizuj();
             kurczak.aktualizuj();
 
-         /*/   for (int n = 0; n < myszN; n++) {
+            for (int n = 0; n < myszN; n++) {
                 kolizja = myszoskoczki[n].sprawdz(kura.x, kura.y, kura.dlugosc, kura.wysokosc, kura.kierunek);
                 if (kolizja) break;
             }
@@ -296,6 +333,14 @@ int main()
                 for (int n = 0; n < jerzN; n++) zajace[n].aktualizuj();
                 for (int n = 0; n < jerzN; n++) jerze[n].aktualizuj();
             }
+            if (poziom == 2) {
+                
+                for (int n = 0; n < hydrantN; n++) {
+                    hydranty[n].ustawX(hydrantX[n]);
+                }
+                for (int n = 0; n < jerzN; n++) zajace[n].aktualizuj();
+                for (int n = 0; n < hydrantN; n++) hydranty[n].aktualizuj();
+            }
             if (poziom == 3) {
                 for (int n = 0; n < myszN; n++)
                 {
@@ -315,7 +360,7 @@ int main()
                 for (int n = 0; n < zmijeN; n++) zmije[n].aktualizuj();
                 sep.aktualizuj();
                 kurczak.aktualizuj();
-            }/*/
+            }
         }
         //-----------ZMIANA SPRITE'ÓW I KOLIZJE
 
@@ -364,6 +409,10 @@ int main()
         if (poziom == 1) {
             for (int n = 0; n < zajacN; n++) window.draw(zajace[n].sprite);
             for (int n = 0; n < jerzN; n++) window.draw(jerze[n].sprite);
+        }
+        if (poziom == 2) {
+            
+            for (int n = 0; n < hydrantN; n++) window.draw(hydranty[n].sprite);
         }
         if (poziom == 3) {
             for (int n = 0; n < skorpioN; n++) window.draw(skorpiony[n].sprite);
