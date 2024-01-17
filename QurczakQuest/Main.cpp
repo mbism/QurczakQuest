@@ -105,7 +105,6 @@ int main()
             if (event.type == Event::KeyPressed) {
                 if (event.key.code == Keyboard::Escape) window.close();
                 if (event.key.code == Keyboard::D) {
-                    cout << tlo.x << " tlo; " << kura.x << " kura" << endl;
                     if (kura.x > 1200 && tlo.x > tlo.granica) {
                         tlo.x -= 10;
                         tlo.aktualizuj();

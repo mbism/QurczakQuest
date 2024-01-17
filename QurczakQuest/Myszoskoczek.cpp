@@ -77,8 +77,6 @@ public:
 	bool sprawdz(int kx, int ky, int kw, int kh, string kkierunek) {
 		int w = dlugosc;
 		int h = wysokosc;
-		//cout << "kura " << kx << " " << ky << " " << kw << " " << kh << " " << kkierunek << " " << endl;
-		//cout << "myszoskoczek " << x << " " << y << " " << w << " " << h << endl;
 		if (kkierunek == "prawo") {
 			if (kx < x + w && kx + kw > x && ky <= y + h && ky + kh >= y) {
 				// Jest kolizja!
