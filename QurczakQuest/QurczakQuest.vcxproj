@@ -133,15 +133,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Gameover.cpp" />
+    <ClCompile Include="Jez.cpp" />
+    <ClCompile Include="Koniec.cpp" />
     <ClCompile Include="Kura.cpp" />
     <ClCompile Include="Kurczak.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Myszoskoczek.cpp" />
+    <ClCompile Include="Pien.cpp" />
     <ClCompile Include="Opcje.cpp" />
     <ClCompile Include="Sep.cpp" />
     <ClCompile Include="Skorpion.cpp" />
+    <ClCompile Include="Statystyki.cpp" />
     <ClCompile Include="Tlo.cpp" />
+    <ClCompile Include="Zajac.cpp" />
     <ClCompile Include="Zmija.cpp" />
   </ItemGroup>
   <ItemGroup>

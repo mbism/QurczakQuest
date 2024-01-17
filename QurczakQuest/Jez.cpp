@@ -5,18 +5,18 @@
 using namespace std;
 using namespace sf;
 
-class Zmija {
+class Jerz {
 private:
 	Texture tekstura;
-	string sciezkaTekstury = "images/zmija.png";
-	int wymiar = 100;
+	string sciezkaTekstury = "images/jerz.png";
+	int wymiar = 80;
 	int podloga = 630 - wymiar;
 	clock_t start, koniec; //timery, które pozwalaja na zmiane sprite'a 
-	int max = 5; // ilo?? klatek w spricie
+	int max = 1; // iloœæ klatek w spricie
 	int i = 0;
 public:
 	Sprite sprite;
-	int poczatkoweX = 1600;
+	int poczatkoweX = 1000;
 	int x = poczatkoweX;
 	int y = podloga;
 
@@ -28,7 +28,7 @@ public:
 	void rysuj() {
 		start = clock();
 		if (!tekstura.loadFromFile(sciezkaTekstury)) {
-			cout << "Nie za?adowano tekstury zmiji" << endl;
+			cout << "Nie za³adowano tekstury jezyka" << endl;
 		}
 		else {
 			sprite.setTexture(tekstura);
@@ -40,10 +40,10 @@ public:
 	void aktualizuj() {
 		koniec = clock();
 		cout << koniec - start << endl;
-		if ((koniec - start) > 800) {
+		if ((koniec - start) > 500) {
 			i++;
 			start = clock();
-			if (i >= max) i = 0;
+			if (i > max) i = 0;
 		}
 		sprite.setPosition(Vector2f(x, y));
 		sprite.setTextureRect(IntRect(0 + wymiar * i, 0, wymiar, wymiar));

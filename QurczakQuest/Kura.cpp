@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <time.h>
+#include "Pien.cpp"
 
 using namespace std;
 using namespace sf;
@@ -14,6 +15,7 @@ private:
 	int i = 0; //o ile razy ma sie przesunie prostokat wyciety ze sprite'a
 	clock_t start = clock(); //timer, który pozwala na zmianê sprite'a 
 	clock_t koniec; //timer, który pozwala na zmianê sprite'a 
+	bool wTrakcieSkoku = false;
 public:
 	Sprite sprite;
 	int x = 120;
@@ -100,5 +102,48 @@ public:
 	void skok() {
 		lata = true;
 		do_gory = true;
+	}
+
+	bool sprawdzKolizjeZPniem(Pien& pien) {
+		if (x < pien.x + 100 && x + dlugosc > pien.x && y < pien.y + 70 && y + wysokosc > pien.y) {
+			// Kolizja z pniem
+			return true;
+		}
+		return false;
+	}
+	void aktualizuj(Pien& pien) {
+		if (wTrakcieSkoku) {
+			if (lata) {
+				dlugosc = 180;
+				wysokosc = 100;
+				if (do_gory) {
+					if (y >= podloga - 160) y -= 2;
+					else {
+						na_dol = true;
+						do_gory = false;
+					}
+				}
+				else if (na_dol) {
+					if (y <= podloga) y += 2;
+					else na_dol = false;
+				}
+				else if (chodzi && (x > 580 && x < 1200) && y <= podloga) {
+					if (kierunek == "prawo") x += 10;
+					else x -= 10;
+				}
+				else lata = false;
+				koniec = clock();
+				i = ((koniec - start) / 100) % 3;
+				if (i > 2) i = 0;
+				if (lata) sprite.setTextureRect(IntRect(0 + 90 * i, 140, 90, 50));
+				else sprite.setTextureRect(IntRect(0, 0, 70, 70));
+				sprite.setPosition(Vector2f(x, y));
+			if (y > pien.y && sprawdzKolizjeZPniem(pien)) {
+				// Zatrzymaj skok, aby postać nie przenikała przez pień.
+				wTrakcieSkoku = false;
+				y = pien.y - wysokosc;  // Ustaw postać na górze pnia.
+			}
+		}
+	}
 	}
 };

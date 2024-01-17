@@ -1,4 +1,4 @@
-ï»¿#include <SFML/Graphics.hpp>
+#include <SFML/Graphics.hpp>
 #include <iostream>
 #include <time.h>
 
@@ -6,15 +6,15 @@ using namespace std;
 using namespace sf;
 
 
-class Myszoskoczek {
+class Zajac {
 private:
 	Texture tekstura;
-	string sciezkaTekstury = "images/myszoskoczek.png";
-	int dlugosc = 45;
-	int wysokosc = 70;
+	string sciezkaTekstury = "images/zajac.png";
+	int dlugosc = 50;
+	int wysokosc = 80;
 	int podloga = 630 - wysokosc;
 	int sufit = 350;
-	clock_t start, koniec; //timery, ktÃ³re pozwalaja na zmiane sprite'a 
+	clock_t start, koniec; //timery, które pozwalaja na zmiane sprite'a 
 	int i = 0;
 	int krok = 2;
 public:
@@ -34,7 +34,7 @@ public:
 	void rysuj() {
 		start = clock();
 		if (!tekstura.loadFromFile(sciezkaTekstury)) {
-			cout << "Nie zaÅ‚adowano tekstury myszoskoczka" << endl;
+			cout << "Nie za³adowano tekstury zajaca" << endl;
 		}
 		else {
 			sprite.setTexture(tekstura);
@@ -53,7 +53,7 @@ public:
 		}
 		else if (wstrzymaj) {
 			koniec = clock();
-			if ((koniec - start)/CLOCKS_PER_SEC > 1) {
+			if ((koniec - start) / CLOCKS_PER_SEC > 1) {
 				wstrzymaj = false;
 				y -= krok;
 				i = 1;
@@ -71,12 +71,14 @@ public:
 		}
 		sprite.setPosition(Vector2f(x, y));
 		sprite.setTextureRect(IntRect(0 + dlugosc * i, 0, dlugosc, wysokosc));
-		
+
 	}
 
 	bool sprawdz(int kx, int ky, int kw, int kh, string kkierunek) {
 		int w = dlugosc;
 		int h = wysokosc;
+		//cout << "kura " << kx << " " << ky << " " << kw << " " << kh << " " << kkierunek << " " << endl;
+		//cout << "myszoskoczek " << x << " " << y << " " << w << " " << h << endl;
 		if (kkierunek == "prawo") {
 			if (kx < x + w && kx + kw > x && ky <= y + h && ky + kh >= y) {
 				// Jest kolizja!
@@ -89,7 +91,7 @@ public:
 				// Jest kolizja!
 				return true;
 			}
-			else return false;	
+			else return false;
 		}
 	}
 };
