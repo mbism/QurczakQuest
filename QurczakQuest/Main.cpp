@@ -167,6 +167,11 @@ int main()
                                 for (int n = 0; n < jerzN; n++) jerze[n].x += 10;
                                 for (int n = 0; n < zajacN; n++) zajace[n].x += 10;
                             }
+                            else if (poziom == 2)
+                            {
+                                for (int n = 0; n < hydrantN; n++) hydranty[n].x += 10;
+
+                            }
                             else if (poziom == 3) {
                                 for (int n = 0; n < skorpioN; n++) {
                                     skorpiony[n].x += 10;
