@@ -18,7 +18,6 @@
 
 using namespace std;
 using namespace sf;
-//do³aczy³am
 
 bool wsad = false;
 
@@ -32,7 +31,7 @@ int main()
     int poziom = 1;
     bool kolizja = false;
     RenderWindow window(VideoMode(windowHeight, windowWidth), "Qurczak Quest", Style::Fullscreen);
-    window.setFramerateLimit(60);
+    window.setFramerateLimit(70);
     Tlo tlo;
     //sztuczne zmienne
    // tlo.dodajSciezke("miasto");
@@ -117,19 +116,18 @@ int main()
         while (window.pollEvent(event))
         {
             if (event.type == Event::Closed) window.close();
-            if (event.type == Event::KeyPressed) {
-                if (event.key.code == Keyboard::Escape) window.close();
-                if (wsad == true)
-                {
+            if (wsad == true){
+                if (event.type == Event::KeyPressed) {
+                    if (event.key.code == Keyboard::Escape) window.close();
                     if (event.key.code == Keyboard::D) {
                         cout << tlo.x << " tlo; " << kura.x << " kura" << endl;
                         if (kura.x > 1200 && tlo.x > tlo.granica) {
                             tlo.x -= 10;
                             tlo.aktualizuj();
                             if (poziom == 1) {
-                            for (int n = 0; n < jerzN; n++) jerze[n].x -= 10;
-                            for (int n = 0; n < zajacN; n++) zajace[n].x -= 10;
-                        }
+                                for (int n = 0; n < jerzN; n++) jerze[n].x -= 10;
+                                for (int n = 0; n < zajacN; n++) zajace[n].x -= 10;
+                            }
                             else if (poziom == 3) {
                                 for (int n = 0; n < skorpioN; n++) {
                                     skorpiony[n].x -= 10;
@@ -152,7 +150,11 @@ int main()
                         if (kura.x <= 580 && kura.x > 20 && tlo.x < 0) {
                             tlo.x += 10;
                             tlo.aktualizuj();
-                            if (poziom == 3) {
+                            if (poziom == 1) {
+                                for (int n = 0; n < jerzN; n++) jerze[n].x += 10;
+                                for (int n = 0; n < zajacN; n++) zajace[n].x += 10;
+                            }
+                            else if (poziom == 3) {
                                 for (int n = 0; n < skorpioN; n++) {
                                     skorpiony[n].x += 10;
                                     skorpiony[n].poczatkoweX += 10;
@@ -170,14 +172,15 @@ int main()
                         if (tlo.x == 0 && kura.x < 190 && kura.kierunek == "lewo") kura.x = 180;
                     }
                     if (event.key.code == Keyboard::W) if (!kura.lata) kura.skok();
-
-                    if (event.type == Event::KeyReleased) {
-                        if (event.key.code == Keyboard::A) kura.chodzi = false;
-                        if (event.key.code == Keyboard::D) kura.chodzi = false;
-                    }
                 }
-                if (wsad == false)
-                {
+                if (event.type == Event::KeyReleased) {
+                    if (event.key.code == Keyboard::A) kura.chodzi = false;
+                    if (event.key.code == Keyboard::D) kura.chodzi = false;
+                }
+            }
+            else if (wsad == false) {
+                if (event.type == Event::KeyPressed) {
+                    if (event.key.code == Keyboard::Escape) window.close();
                     if (event.key.code == Keyboard::Right) {
                         cout << tlo.x << " tlo; " << kura.x << " kura" << endl;
                         if (kura.x > 1200 && tlo.x > tlo.granica) {
@@ -210,8 +213,8 @@ int main()
                             tlo.x += 10;
                             tlo.aktualizuj();
                             if (poziom == 1) {
-                              for (int n = 0; n < jerzN; n++) jerze[n].x += 10;
-                              for (int n = 0; n < zajacN; n++) zajace[n].x += 10;
+                                for (int n = 0; n < jerzN; n++) jerze[n].x += 10;
+                                for (int n = 0; n < zajacN; n++) zajace[n].x += 10;
                             }
                             else if (poziom == 3) {
                                 for (int n = 0; n < skorpioN; n++) {
@@ -231,11 +234,10 @@ int main()
                         if (tlo.x == 0 && kura.x < 190 && kura.kierunek == "lewo") kura.x = 180;
                     }
                     if (event.key.code == Keyboard::Up) if (!kura.lata) kura.skok();
-
-                    if (event.type == Event::KeyReleased) {
-                        if (event.key.code == Keyboard::Left) kura.chodzi = false;
-                        if (event.key.code == Keyboard::Right) kura.chodzi = false;
-                    }
+                }
+                if (event.type == Event::KeyReleased) {
+                    if (event.key.code == Keyboard::Left) kura.chodzi = false;
+                    if (event.key.code == Keyboard::Right) kura.chodzi = false;
                 }
             }
         }
@@ -256,7 +258,7 @@ int main()
                     }
                 }
         }
-        if (poziom == 3) {
+        else if (poziom == 3) {
             for (int n = 0; n < skorpioN; n++) skorpiony[n].aktualizuj();
             for (int n = 0; n < myszN; n++) myszoskoczki[n].aktualizuj();
             for (int n = 0; n < zmijeN; n++) zmije[n].aktualizuj();
@@ -281,22 +283,19 @@ int main()
             }
         }
 
-        if (kolizja) {
+        /*if (kolizja) {
             smierc.rysuj(window);
             tlo.x = 0;
-            kura.x = 50;
+            kura.x = 120;
+            kura.aktualizuj();
+            kura.chodzi = false;
             if (poziom == 1) {
-                for (int n = 0; n < zajacN; n++)
-                {
-                    zajace[n].ustawX(zajacX[n]);
-                };
-                for (int n = 0; n < jerzN; n++) {
-                    jerze[n].ustawX(jerzX[n]);
-                }
+                for (int n = 0; n < zajacN; n++) zajace[n].ustawX(zajacX[n]);
+                for (int n = 0; n < jerzN; n++) jerze[n].ustawX(jerzX[n]);
                 for (int n = 0; n < jerzN; n++) zajace[n].aktualizuj();
                 for (int n = 0; n < jerzN; n++) jerze[n].aktualizuj();
             }
-            if (poziom == 3) {
+            else if (poziom == 3) {
                 for (int n = 0; n < myszN; n++)
                 {
                     myszoskoczki[n].ustawX(myszX[n]);
@@ -318,7 +317,7 @@ int main()
             }
         }
         //-----------ZMIANA SPRITE'ÓW I KOLIZJE
-
+        */
         
         //-----------------------------------UPDATE-----------------------------------
         if (tlo.x == tlo.granica && kura.x >= 1980) {
@@ -335,7 +334,9 @@ int main()
                 tlo.x = 0;
                 tlo.granica = -13450;
                 tlo.rysuj();
-                kura.x = 50;
+                kura.x = 120;
+                kura.chodzi = false;
+                kura.aktualizuj();
             }
             else if (poziom == 3) {
                 // KOD NA EKRAN PO POZIOMIE I PIOSENKA O MIECIE (proponujê Sen o Warszawie Niemena)
@@ -346,13 +347,34 @@ int main()
                 tlo.x = 0;
                 tlo.granica = -14470;
                 tlo.rysuj();
-                kura.x = 50;
+                kura.x = 120;
+                kura.chodzi = false;
+                kura.aktualizuj();
             }
-            else {
+            else if(poziom==4) {
                 //KOD NA EKRAN PO POZIOMIE (WYGRANA !!!) NIE MA WODY NA PYSTYNI BAJMU
                 statystyki.zdobytePoziomy++;
                 statystyki.rysuj(window);
+                
+            }
+            else if(poziom==5) {
                 koniec.rysuj(window);
+            }
+            else {
+                menu.open = true;
+                while (menu.open) {
+                    menu.draw(window);
+                    wsad = menu.wsad;
+                }
+                tlo.dodajSciezke("las");
+                tlo.x = 0;
+                tlo.granica = -9590;
+                tlo.rysuj();
+                kura.x = 120;
+                kura.chodzi = false;
+                poziom = 1;
+                statystyki.zdobytePoziomy = 0;
+                kura.aktualizuj();
             }
             
         }

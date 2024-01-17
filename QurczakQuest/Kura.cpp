@@ -72,6 +72,7 @@ public:
 			i = ((koniec - start) / 1000) % 2;
 			if (i > 1) i = 0;
 			sprite.setTextureRect(IntRect(0 + i * 70, 0, 70, 70));
+			sprite.setPosition(Vector2f(x, y));
 		}
 	}
 
@@ -104,7 +105,7 @@ public:
 		do_gory = true;
 	}
 
-	bool sprawdzKolizjeZPniem(Pien& pien) {
+/*	bool sprawdzKolizjeZPniem(Pien& pien) {
 		if (x < pien.x + 100 && x + dlugosc > pien.x && y < pien.y + 70 && y + wysokosc > pien.y) {
 			// Kolizja z pniem
 			return true;
@@ -145,5 +146,5 @@ public:
 			}
 		}
 	}
-	}
+	}*/
 };
