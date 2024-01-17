@@ -45,21 +45,21 @@ public:
         tekstStatystyk.setCharacterSize(65);
         tekstStatystyk.setFillColor(Color::White);
         tekstStatystyk.setStyle(Text::Bold);
-        tekstStatystyk.setPosition(400, 175);
+        tekstStatystyk.setPosition(300, 175);
 
         Text tekstStatystyk1;
         tekstStatystyk1.setFont(czcionka);
         tekstStatystyk1.setCharacterSize(40);
         tekstStatystyk1.setFillColor(Color::White);
         tekstStatystyk1.setStyle(Text::Bold);
-        tekstStatystyk1.setPosition(880, 330);
+        tekstStatystyk1.setPosition(865, 330);
 
         Text tekstStatystyk2;
         tekstStatystyk2.setFont(czcionka);
         tekstStatystyk2.setCharacterSize(40);
         tekstStatystyk2.setFillColor(Color::White);
         tekstStatystyk2.setStyle(Text::Bold);
-        tekstStatystyk2.setPosition(735, 420);
+        tekstStatystyk2.setPosition(725, 420);
 
 
         Text tekstStatystyk3;
@@ -67,7 +67,7 @@ public:
         tekstStatystyk3.setCharacterSize(40);
         tekstStatystyk3.setFillColor(Color::White);
         tekstStatystyk3.setStyle(Text::Bold);
-        tekstStatystyk3.setPosition(575, 490);
+        tekstStatystyk3.setPosition(450, 490);
 
 
         Text tekstStatystyk4;
@@ -75,7 +75,7 @@ public:
         tekstStatystyk4.setCharacterSize(40);
         tekstStatystyk4.setFillColor(Color::White);
         tekstStatystyk4.setStyle(Text::Bold);
-        tekstStatystyk4.setPosition(735, 560);
+        tekstStatystyk4.setPosition(625, 560);
 
         Text tekstStatystyk5;
         tekstStatystyk5.setFont(czcionka);
