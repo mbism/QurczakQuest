@@ -287,7 +287,14 @@ int main()
                     }
                 }
         }
-        if (poziom == 3) {
+        else if (poziom == 2) {
+            for (int n = 0; n < hydrantN; n++) hydranty[n].aktualizuj();
+            for (int n = 0; n < hydrantN; n++) {
+                kolizja = hydranty[n].sprawdz(kura.x, kura.y, kura.dlugosc, kura.wysokosc, kura.kierunek);
+                if (kolizja) break;
+            }
+        }
+        else if (poziom == 3) {
             for (int n = 0; n < skorpioN; n++) skorpiony[n].aktualizuj();
             for (int n = 0; n < myszN; n++) myszoskoczki[n].aktualizuj();
             for (int n = 0; n < zmijeN; n++) zmije[n].aktualizuj();
