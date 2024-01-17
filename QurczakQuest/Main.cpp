@@ -319,7 +319,7 @@ int main()
             }
         }
 
-        /*if (kolizja) {
+        if (kolizja) {
             smierc.rysuj(window);
             tlo.x = 0;
             kura.x = 120;
@@ -353,7 +353,7 @@ int main()
             }
         }
         //-----------ZMIANA SPRITE'ÓW I KOLIZJE
-        */
+        
         
         //-----------------------------------UPDATE-----------------------------------
         if (tlo.x == tlo.granica && kura.x >= 1980) {

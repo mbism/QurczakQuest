@@ -26,7 +26,7 @@ public:
         else {
             sprite.setTexture(tekstura);
             sprite.setPosition(Vector2f(1750, 910));
-            sprite.scale(Vector2f(2, 2));
+            //sprite.scale(Vector2f(2, 2));
             sprite.setTextureRect(IntRect(0, 0, 70, 70));
         }
 
